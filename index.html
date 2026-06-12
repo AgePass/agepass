@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgePass — Vérification d'âge automatisée</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep:    #080e1a;
+    --bg-mid:     #0d1626;
+    --bg-card:    #111d30;
+    --cyan:       #00d4ff;
+    --cyan-dim:   #0099bb;
+    --violet:     #7c5cfc;
+    --text:       #e8f0fe;
+    --text-muted: #7a90b0;
+    --border:     rgba(0, 212, 255, 0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(8, 14, 26, 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .nav-logo span { color: var(--cyan); }
+
+  .nav-cta {
+    background: var(--cyan);
+    color: var(--bg-deep);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 22px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .nav-cta:hover {
+    background: #33ddff;
+    box-shadow: 0 0 20px rgba(0,212,255,0.4);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    z-index: 1;
+    background: var(--bg-deep);
+  }
+
+  .hero-orb {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(124,92,252,0.14) 0%, rgba(0,212,255,0.07) 40%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; transform: translate(-50%, -60%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -60%) scale(1.08); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid rgba(0,212,255,0.3);
+    padding: 6px 16px;
+    margin-bottom: 32px;
+    background: rgba(0,212,255,0.05);
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  h1 {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -2px;
+    max-width: 860px;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+  h1 .accent { color: var(--cyan); }
+  h1 .accent-v { color: var(--violet); }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 16px 36px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 30px rgba(0,212,255,0.35);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 15px 36px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* STATS */
+  .stats-bar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-mid);
+  }
+
+  .stat {
+    flex: 1;
+    min-width: 160px;
+    padding: 32px 24px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--bg-deep);
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h2 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .section-intro {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 64px;
+  }
+
+  /* PROBLEM */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .problem-card {
+    background: var(--bg-card);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--cyan), var(--violet));
+  }
+
+  .problem-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+
+  .problem-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .problem-card p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+
+  /* FLOW */
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .flow-steps::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 56px; bottom: 56px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--cyan), var(--violet));
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .flow-step:last-child { border-bottom: none; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 56px; height: 56px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--cyan);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-content h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+  .step-content p { color: var(--text-muted); font-size: 15px; max-width: 520px; }
+
+  .step-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    padding: 3px 10px;
+    margin-top: 10px;
+  }
+
+  /* COMPLIANCE */
+  .compliance-strip {
+    position: relative;
+    z-index: 1;
+    padding: 64px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--bg-deep);
+  }
+
+  .compliance-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .compliance-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    background: rgba(0,212,255,0.03);
+  }
+  .compliance-item .icon { font-size: 18px; }
+
+  /* CTA SECTION */
+  .cta-section {
+    position: relative;
+    z-index: 1;
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 24px;
+    text-align: center;
+  }
+
+  .cta-section h2 { max-width: 700px; margin: 0 auto 16px; }
+  .cta-section p { color: var(--text-muted); font-size: 18px; max-width: 480px; margin: 0 auto 48px; }
+
+  /* FORM */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    background: rgba(0, 212, 255, 0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: var(--text-muted); }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus { border-color: var(--cyan); }
+  .contact-form select option { background: var(--bg-deep); color: var(--text); }
+  .contact-form textarea { resize: vertical; min-height: 100px; }
+
+  /* TARIF NOTE */
+  .tarif-note {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    background: var(--bg-deep);
+    text-align: center;
+  }
+
+  .tarif-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid var(--border);
+    background: rgba(0,212,255,0.04);
+    padding: 20px 40px;
+    font-size: 16px;
+    color: var(--text-muted);
+  }
+  .tarif-box strong { color: var(--cyan); font-size: 18px; }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--text); }
+  .footer-logo span { color: var(--cyan); }
+
+  footer p { font-size: 13px; color: var(--text-muted); }
+
+  footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--cyan); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .stat { min-width: 140px; padding: 24px 16px; }
+    .stat-value { font-size: 28px; }
+    section { padding: 64px 20px; }
+    .flow-steps::before { display: none; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .tarif-box { flex-direction: column; padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Age<span>Pass</span></div>
+  <a href="#contact" class="nav-cta">Demander un pilote</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-badge">LegalTech · RegTech · Retail</div>
+  <h1>
+    Vente de produits<br>
+    <span class="accent">+18 automatisée.</span><br>
+    <span class="accent-v">Zéro caissier.</span>
+  </h1>
+  <p class="hero-sub">
+    AgePass vérifie l'identité de vos clients en moins de 10 secondes, archive la preuve de conformité, et déverrouille le casier — sans intervention humaine.
+  </p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Demander un pilote gratuit</a>
+    <a href="#comment" class="btn-secondary">Voir comment ça marche</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value">10s</div>
+    <div class="stat-label">Vérification complète</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">0€</div>
+    <div class="stat-label">Par vérification</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">30j</div>
+    <div class="stat-label">Archivage des preuves</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">100%</div>
+    <div class="stat-label">Conformité légale</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section>
+  <span class="section-label">Le problème</span>
+  <h2>La vente sans caissier crée<br>un angle mort légal.</h2>
+  <p class="section-intro">Les enseignes adoptent le click-and-collect et les casiers automatiques — mais la loi exige toujours une vérification d'âge pour alcool, CBD et vape.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <span class="problem-icon">⚖️</span>
+      <h3>Risque juridique</h3>
+      <p>Vente d'alcool à mineur = amende jusqu'à 7 500 € et responsabilité pénale du dirigeant.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">👤</span>
+      <h3>Le caissier coûte cher</h3>
+      <p>Mobiliser un employé à chaque retrait de produit +18 annule le bénéfice de l'automatisation.</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">📦</span>
+      <h3>Le casier reste bloqué</h3>
+      <p>Sans solution de vérification, les produits soumis à restriction sont exclus des casiers connectés.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section id="comment">
+  <span class="section-label">La solution</span>
+  <h2>Le flux AgePass en 4 étapes.</h2>
+  <p class="section-intro">Un module SaaS qui s'intègre à votre système de casiers existant via API.</p>
+
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Détection du panier</h3>
+        <p>Le système détecte qu'une commande contient un produit soumis à restriction d'âge. Le retrait en casier est suspendu jusqu'à vérification.</p>
+        <span class="step-tag">Intégration API</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Vérification d'identité</h3>
+        <p>Le client scanne son QR code de commande. AgePass déclenche une vérification biométrique — rapide, sécurisée, sans friction.</p>
+        <span class="step-tag">Vérification biométrique</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Archivage de la preuve</h3>
+        <p>Un token JWT signé est généré et archivé 30 jours. Votre enseigne dispose d'une traçabilité complète en cas de contrôle.</p>
+        <span class="step-tag">RGPD · JWT sécurisé</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Déverrouillage du casier</h3>
+        <p>Le casier s'ouvre automatiquement. Zéro intervention humaine. Le client récupère sa commande en toute légalité.</p>
+        <span class="step-tag">Déverrouillage instantané</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<div class="compliance-strip">
+  <p style="text-align:center; font-size:11px; text-transform:uppercase; letter-spacing:3px; color: var(--text-muted); font-family:'Space Mono',monospace;">Conformité &amp; Intégrations</p>
+  <div class="compliance-logos">
+    <div class="compliance-item"><span class="icon">🔒</span> RGPD</div>
+    <div class="compliance-item"><span class="icon">📋</span> Art. L3342-1 CSP</div>
+    <div class="compliance-item"><span class="icon">🔑</span> JWT archivé 30j</div>
+    <div class="compliance-item"><span class="icon">📡</span> API REST</div>
+    <div class="compliance-item"><span class="icon">🛡️</span> Vérification biométrique</div>
+  </div>
+</div>
+
+<!-- TARIF NOTE -->
+<div class="tarif-note">
+  <div class="tarif-box">
+    <span>💼</span>
+    <div>
+      <strong>Tarification sur mesure</strong><br>
+      <span style="font-size:14px;">Pilote gratuit pour les premiers partenaires — contactez-nous pour un devis adapté à votre réseau.</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="cta-section" id="contact">
+  <span class="section-label" style="display:block; margin-bottom:16px;">Pilote gratuit</span>
+  <h2>Votre premier site pilote,<br>sans engagement.</h2>
+  <p>On configure AgePass sur un point de retrait existant et on mesure les résultats ensemble.</p>
+
+  <div class="contact-form">
+    <input type="text" placeholder="Votre prénom et nom" />
+    <input type="text" placeholder="Enseigne / Entreprise" />
+    <input type="email" placeholder="Email professionnel" />
+    <select>
+      <option value="" disabled selected>Vous êtes…</option>
+      <option>Directeur / DSI grande distribution</option>
+      <option>Responsable innovation retail</option>
+      <option>Investisseur</option>
+      <option>Autre</option>
+    </select>
+    <textarea placeholder="Un mot sur votre projet ou réseau (optionnel)"></textarea>
+    <button class="btn-primary" style="width:100%; font-size:16px; padding:18px; cursor:pointer;">
+      Demander mon pilote →
+    </button>
+    <p style="font-size:12px; color: var(--text-muted); text-align:center; margin-top:4px;">Réponse sous 48h · Aucun engagement</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Age<span>Pass</span> <span style="color:var(--text-muted); font-weight:400; font-size:13px; margin-left:8px;">Technologies SAS</span></div>
+    <p>© 2026 AgePass Technologies — Saint-Étienne, France</p>
+    <div style="display:flex; gap:24px; flex-wrap:wrap;">
+      <a href="#">Mentions légales</a>
+      <a href="#">RGPD</a>
+      <a href="mailto:contact@agepass.fr">contact@agepass.fr</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
