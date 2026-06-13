@@ -181,7 +181,6 @@
     text-decoration: none;
     display: inline-block;
     transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
   }
   .btn-primary:hover {
     opacity: 0.9;
@@ -213,7 +212,7 @@
     flex-wrap: wrap;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    background: var(--bg-mid);
+    background: #0d1626;
   }
 
   .stat {
@@ -406,7 +405,8 @@
   .cta-section {
     position: relative;
     z-index: 1;
-    background: var(--bg-mid);
+    overflow: hidden;
+    background: #0d1626;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 100px 24px;
@@ -476,7 +476,7 @@
   footer {
     position: relative;
     z-index: 1;
-    background: var(--bg-mid);
+    background: #0d1626;
     border-top: 1px solid var(--border);
     padding: 40px 24px;
     display: flex;
@@ -526,7 +526,7 @@
 
 <nav>
   <div class="nav-logo">Age<span>Pass</span></div>
-  <a href="#contact" class="nav-cta">Demander un pilote</a>
+  <a href="https://tally.so/r/MeGYWM" target="_blank" class="nav-cta">Demander un pilote</a>
 </nav>
 
 <!-- HERO -->
@@ -542,7 +542,7 @@
     AgePass vérifie l'identité de vos clients en moins de 10 secondes, archive la preuve de conformité, et déverrouille le casier — sans intervention humaine.
   </p>
   <div class="hero-actions">
-    <a href="#contact" class="btn-primary">Demander un pilote gratuit</a>
+    <a href="https://tally.so/r/MeGYWM" target="_blank" class="btn-primary">Demander un pilote gratuit</a>
     <a href="#comment" class="btn-secondary">Voir comment ça marche</a>
   </div>
 </div>
@@ -663,7 +663,7 @@
   <h2>Votre premier site pilote,<br>sans engagement.</h2>
   <p>On configure AgePass sur un point de retrait existant et on mesure les résultats ensemble.</p>
 
-  <div class="contact-form">
+  <div class="contact-form" style="isolation:isolate; position:relative; z-index:2;">
     <input type="text" placeholder="Votre prénom et nom" />
     <input type="text" placeholder="Enseigne / Entreprise" />
     <input type="email" placeholder="Email professionnel" />
@@ -675,7 +675,7 @@
       <option>Autre</option>
     </select>
     <textarea placeholder="Un mot sur votre projet ou réseau (optionnel)"></textarea>
-    <button class="btn-primary" style="width:100%; font-size:16px; padding:18px; cursor:pointer;">
+    <a href="https://tally.so/r/MeGYWM" target="_blank" class="btn-primary" style="width:100%; font-size:16px; padding:18px; cursor:pointer; display:block; text-align:center; text-decoration:none;">
       Demander mon pilote →
     </button>
     <p style="font-size:12px; color: var(--text-muted); text-align:center; margin-top:4px;">Réponse sous 48h · Aucun engagement</p>
@@ -683,17 +683,42 @@
 </div>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Age<span>Pass</span> <span style="color:var(--text-muted); font-weight:400; font-size:13px; margin-left:8px;">Technologies SAS</span></div>
-    <p>© 2026 AgePass Technologies — Saint-Étienne, France</p>
+<div style="background:#080e1a; border-top:1px solid rgba(0,212,255,0.15); padding:40px 24px; position:relative; z-index:10; isolation:isolate;">
+  <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+    <div style="font-weight:700; font-size:18px; letter-spacing:-0.5px; color:#e8f0fe; font-family:'Space Grotesk',sans-serif;">Age<span style="color:#00d4ff;">Pass</span> <span style="color:#7a90b0; font-weight:400; font-size:13px; margin-left:8px;">Technologies SAS</span></div>
+    <p style="font-size:13px; color:#7a90b0; font-family:'Space Grotesk',sans-serif;">© 2026 AgePass Technologies — France</p>
     <div style="display:flex; gap:24px; flex-wrap:wrap;">
-      <a href="#">Mentions légales</a>
-      <a href="#">RGPD</a>
-      <a href="mailto:contact@agepass.fr">contact@agepass.fr</a>
+      <a href="#" style="color:#7a90b0; text-decoration:none; font-size:13px; font-family:'Space Grotesk',sans-serif;">Mentions légales</a>
+      <a href="#" style="color:#7a90b0; text-decoration:none; font-size:13px; font-family:'Space Grotesk',sans-serif;">RGPD</a>
+      <a href="mailto:contact@agepass.fr" style="color:#7a90b0; text-decoration:none; font-size:13px; font-family:'Space Grotesk',sans-serif;">contact@agepass.fr</a>
     </div>
   </div>
-</footer>
+</div>
+
+</body>
+</html><!-- CTA / CONTACT -->
+<div id="contact" style="background:#0d1626; border-top:1px solid rgba(0,212,255,0.15); border-bottom:1px solid rgba(0,212,255,0.15); padding:100px 24px; text-align:center; position:relative; z-index:1;">
+  <span style="font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#00d4ff; display:block; margin-bottom:16px;">Pilote gratuit</span>
+  <h2 style="font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-1.5px; line-height:1.1; margin-bottom:16px; color:#e8f0fe; max-width:700px; margin-left:auto; margin-right:auto;">Votre premier site pilote,<br>sans engagement.</h2>
+  <p style="color:#7a90b0; font-size:18px; max-width:480px; margin:0 auto 48px;">On configure AgePass sur un point de retrait existant et on mesure les résultats ensemble.</p>
+  <a href="https://tally.so/r/MeGYWM" target="_blank" style="display:inline-block; padding:18px 48px; background:linear-gradient(135deg,#00d4ff,#7c5cfc); color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; text-decoration:none; border-radius:2px;">
+    Demander mon pilote →
+  </a>
+  <p style="font-size:12px; color:#7a90b0; text-align:center; margin-top:16px; font-family:'Space Grotesk',sans-serif;">Réponse sous 48h · Aucun engagement</p>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#080e1a; border-top:1px solid rgba(0,212,255,0.15); padding:40px 24px;">
+  <div style="max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+    <div style="font-weight:700; font-size:18px; color:#e8f0fe; font-family:'Space Grotesk',sans-serif;">Age<span style="color:#00d4ff;">Pass</span> <span style="color:#7a90b0; font-weight:400; font-size:13px; margin-left:8px;">Technologies SAS</span></div>
+    <p style="font-size:13px; color:#7a90b0; font-family:'Space Grotesk',sans-serif; margin:0;">© 2026 AgePass Technologies — France</p>
+    <div style="display:flex; gap:24px; flex-wrap:wrap;">
+      <a href="#" style="color:#7a90b0; text-decoration:none; font-size:13px; font-family:'Space Grotesk',sans-serif; background:none;">Mentions légales</a>
+      <a href="#" style="color:#7a90b0; text-decoration:none; font-size:13px; font-family:'Space Grotesk',sans-serif; background:none;">RGPD</a>
+      <a href="mailto:contact@agepass.fr" style="color:#7a90b0; text-decoration:none; font-size:13px; font-family:'Space Grotesk',sans-serif; background:none;">contact@agepass.fr</a>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
