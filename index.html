@@ -701,22 +701,70 @@
   <h2 style="font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-1.5px; line-height:1.1; margin-bottom:16px; color:#e8f0fe; max-width:700px; margin-left:auto; margin-right:auto; font-family:'Space Grotesk',sans-serif;">Votre premier site pilote,<br>sans engagement.</h2>
   <p style="color:#7a90b0; font-size:18px; max-width:480px; margin:0 auto 48px; font-family:'Space Grotesk',sans-serif;">On configure AgePass sur un point de retrait existant et on mesure les résultats ensemble.</p>
 
-  <div style="max-width:480px; margin:0 auto; display:flex; flex-direction:column; gap:16px;">
-    <input type="text" placeholder="Votre prénom et nom" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
-    <input type="text" placeholder="Enseigne / Entreprise" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
-    <input type="email" placeholder="Email professionnel" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
-    <select style="background:#0d1626; border:1px solid rgba(0,212,255,0.15); color:#7a90b0; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; -webkit-appearance:none;">
+  <div id="form-container" style="max-width:480px; margin:0 auto; display:flex; flex-direction:column; gap:16px;">
+    <input id="f-nom" type="text" placeholder="Votre prénom et nom" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
+    <input id="f-enseigne" type="text" placeholder="Enseigne / Entreprise" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
+    <input id="f-email" type="email" placeholder="Email professionnel" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
+    <select id="f-role" style="background:#0d1626; border:1px solid rgba(0,212,255,0.15); color:#7a90b0; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; -webkit-appearance:none;">
       <option value="" disabled selected>Vous êtes…</option>
       <option>Directeur / DSI grande distribution</option>
       <option>Responsable innovation retail</option>
       <option>Investisseur</option>
       <option>Autre</option>
     </select>
-    <textarea placeholder="Un mot sur votre projet ou réseau (optionnel)" rows="4" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; resize:vertical;"></textarea>
-    <a href="https://tally.so/r/MeGYWM" target="_blank" style="display:block; width:100%; padding:18px; background:#00d4ff; color:#080e1a; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; text-align:center; text-decoration:none; box-sizing:border-box; cursor:pointer;">Demander mon pilote →</a>
+    <textarea id="f-message" placeholder="Un mot sur votre projet ou réseau (optionnel)" rows="4" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; resize:vertical;"></textarea>
+    <button onclick="submitForm()" style="display:block; width:100%; padding:18px; background:#00d4ff; color:#080e1a; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; text-align:center; border:none; box-sizing:border-box; cursor:pointer;">Demander mon pilote →</button>
     <p style="font-size:12px; color:#7a90b0; text-align:center; font-family:'Space Grotesk',sans-serif; margin:0;">Réponse sous 48h · Aucun engagement</p>
   </div>
+
+  <div id="form-success" style="display:none; max-width:480px; margin:0 auto; padding:40px; border:1px solid rgba(0,212,255,0.3); background:rgba(0,212,255,0.05);">
+    <div style="font-size:48px; margin-bottom:16px;">✓</div>
+    <h3 style="color:#00d4ff; font-family:'Space Grotesk',sans-serif; font-size:24px; margin-bottom:12px;">Message envoyé !</h3>
+    <p style="color:#7a90b0; font-family:'Space Grotesk',sans-serif;">Nous vous recontactons sous 48h.</p>
+  </div>
 </div>
+
+<script>
+function submitForm() {
+  var nom = document.getElementById('f-nom').value;
+  var enseigne = document.getElementById('f-enseigne').value;
+  var email = document.getElementById('f-email').value;
+  var role = document.getElementById('f-role').value;
+  var message = document.getElementById('f-message').value;
+
+  if (!nom || !email) {
+    alert('Merci de renseigner votre nom et votre email.');
+    return;
+  }
+
+  var btn = document.querySelector('#form-container button');
+  btn.textContent = 'Envoi en cours…';
+  btn.disabled = true;
+
+  fetch('https://formsubmit.co/ajax/contact@agepass.fr', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      nom: nom,
+      enseigne: enseigne,
+      email: email,
+      role: role,
+      message: message,
+      _subject: 'Nouveau contact AgePass — ' + nom
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  })
+  .catch(function() {
+    btn.textContent = 'Demander mon pilote →';
+    btn.disabled = false;
+    alert('Une erreur est survenue. Contactez-nous à contact@agepass.fr');
+  });
+}
+</script>
 
 <!-- FOOTER -->
 <div style="background:#080e1a; border-top:1px solid rgba(0,212,255,0.15); padding:40px 24px;">
