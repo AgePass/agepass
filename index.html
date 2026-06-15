@@ -699,20 +699,25 @@
   <h2 style="font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-1.5px; line-height:1.1; margin-bottom:16px; color:#e8f0fe; max-width:700px; margin-left:auto; margin-right:auto; font-family:'Space Grotesk',sans-serif;">Votre premier site pilote,<br>sans engagement.</h2>
   <p style="color:#7a90b0; font-size:18px; max-width:480px; margin:0 auto 48px; font-family:'Space Grotesk',sans-serif;">On configure AgePass sur un point de retrait existant et on mesure les résultats ensemble.</p>
 
-  <div id="ap-form" style="max-width:480px; margin:0 auto; display:flex; flex-direction:column; gap:16px;">
-    <input name="nom" type="text" placeholder="Votre prénom et nom" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
-    <input name="enseigne" type="text" placeholder="Enseigne / Entreprise" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
-    <input name="email" type="email" placeholder="Email professionnel" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
-    <select name="role" style="background:#0d1626; border:1px solid rgba(0,212,255,0.15); color:#7a90b0; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; -webkit-appearance:none;">
-      <option value="" disabled selected>Vous êtes…</option>
-      <option>Directeur / DSI grande distribution</option>
-      <option>Responsable innovation retail</option>
-      <option>Investisseur</option>
-      <option>Autre</option>
-    </select>
-    <textarea name="message" placeholder="Un mot sur votre projet ou réseau (optionnel)" rows="4" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; resize:vertical;"></textarea>
-    <button id="ap-btn" onclick="apSubmit()" style="display:block; width:100%; padding:18px; background:#00d4ff; color:#080e1a; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; text-align:center; border:none; box-sizing:border-box; cursor:pointer;">Demander mon pilote →</button>
-    <p style="font-size:12px; color:#7a90b0; text-align:center; font-family:'Space Grotesk',sans-serif; margin:0;">Réponse sous 48h · Aucun engagement</p>
+  <div id="ap-form-wrap" style="max-width:480px; margin:0 auto;">
+    <form action="https://formsubmit.co/contact@agepass.fr" method="POST" style="display:flex; flex-direction:column; gap:16px;">
+      <input type="hidden" name="_next" value="https://www.agepass.fr?merci=1#contact" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_subject" value="Nouveau contact AgePass" />
+      <input name="Nom" type="text" placeholder="Votre prénom et nom" required style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
+      <input name="Enseigne" type="text" placeholder="Enseigne / Entreprise" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
+      <input name="Email" type="email" placeholder="Email professionnel" required style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box;" />
+      <select name="Role" style="background:#0d1626; border:1px solid rgba(0,212,255,0.15); color:#7a90b0; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; -webkit-appearance:none;">
+        <option value="" disabled selected>Vous êtes…</option>
+        <option>Directeur / DSI grande distribution</option>
+        <option>Responsable innovation retail</option>
+        <option>Investisseur</option>
+        <option>Autre</option>
+      </select>
+      <textarea name="Message" placeholder="Un mot sur votre projet ou réseau (optionnel)" rows="4" style="background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15); color:#e8f0fe; font-family:'Space Grotesk',sans-serif; font-size:15px; padding:14px 18px; outline:none; width:100%; box-sizing:border-box; resize:vertical;"></textarea>
+      <button type="submit" style="display:block; width:100%; padding:18px; background:#00d4ff; color:#080e1a; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; text-align:center; border:none; box-sizing:border-box; cursor:pointer;">Demander mon pilote →</button>
+      <p style="font-size:12px; color:#7a90b0; text-align:center; font-family:'Space Grotesk',sans-serif; margin:0;">Réponse sous 48h · Aucun engagement</p>
+    </form>
   </div>
 
   <div id="ap-success" style="display:none; max-width:480px; margin:0 auto; padding:48px 32px; border:1px solid rgba(0,212,255,0.3); background:rgba(0,212,255,0.05);">
@@ -723,36 +728,9 @@
 </div>
 
 <script>
-function apSubmit() {
-  var form = document.getElementById('ap-form');
-  var inputs = form.querySelectorAll('input, select, textarea');
-  var btn = document.getElementById('ap-btn');
-  var data = {};
-
-  inputs.forEach(function(el) {
-    if (el.name) data[el.name] = el.value;
-  });
-
-  data['_subject'] = 'Nouveau contact AgePass — ' + (data['nom'] || '');
-
-  btn.textContent = 'Envoi en cours…';
-  btn.disabled = true;
-
-  fetch('https://formsubmit.co/ajax/contact@agepass.fr', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(function(r) { return r.json(); })
-  .then(function() {
-    document.getElementById('ap-form').style.display = 'none';
-    document.getElementById('ap-success').style.display = 'block';
-  })
-  .catch(function() {
-    btn.textContent = 'Demander mon pilote →';
-    btn.disabled = false;
-    alert('Erreur réseau. Contactez-nous à contact@agepass.fr');
-  });
+if (window.location.search.indexOf('merci=1') !== -1) {
+  document.getElementById('ap-form-wrap').style.display = 'none';
+  document.getElementById('ap-success').style.display = 'block';
 }
 </script>
 
