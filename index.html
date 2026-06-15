@@ -724,16 +724,17 @@
 
 <script>
 function submitForm() {
-  var nom = document.getElementById('f-nom').value;
-  var enseigne = document.getElementById('f-enseigne').value;
-  var email = document.getElementById('f-email').value;
-  var role = document.getElementById('f-role').value;
-  var message = document.getElementById('f-message').value;
+  var nomEl = document.getElementById('f-nom');
+  var emailEl = document.getElementById('f-email');
+  var enseigneEl = document.getElementById('f-enseigne');
+  var roleEl = document.getElementById('f-role');
+  var messageEl = document.getElementById('f-message');
 
-  if (!nom || !email) {
-    alert('Merci de renseigner votre nom et votre email.');
-    return;
-  }
+  var nom = nomEl ? nomEl.value.trim() : '';
+  var email = emailEl ? emailEl.value.trim() : '';
+  var enseigne = enseigneEl ? enseigneEl.value.trim() : '';
+  var role = roleEl ? roleEl.value : '';
+  var message = messageEl ? messageEl.value.trim() : '';
 
   var btn = document.querySelector('#form-container button');
   btn.textContent = 'Envoi en cours…';
