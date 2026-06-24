@@ -1,0 +1,77 @@
+/*
+ * Spacing Patterns — AgePass Design System
+ *
+ * Three semantic patterns inspired by Nathan Curtis' spacing model:
+ *   stack   → vertical rhythm between consecutive elements
+ *   inset   → internal padding of a component
+ *   inline  → horizontal gap between sibling elements
+ *
+ * These are utility classes, not Tailwind utilities, so they compose cleanly
+ * with any component without needing to pass className props for spacing.
+ */
+
+/* ─── Stack — vertical spacing ─────────────────────────────────────────── */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-2xs { gap: var(--space-1); }   /* 4px  — labels, chips */
+.stack-xs  { gap: var(--space-2); }   /* 8px  — tight lists */
+.stack-sm  { gap: var(--space-3); }   /* 12px — form fields */
+.stack-md  { gap: var(--space-4); }   /* 16px — card content */
+.stack-lg  { gap: var(--space-6); }   /* 24px — section blocks */
+.stack-xl  { gap: var(--space-8); }   /* 32px — major groups */
+.stack-2xl { gap: var(--space-12); }  /* 48px — section → section */
+.stack-3xl { gap: var(--space-16); }  /* 64px — hero blocks */
+
+/* ─── Inline — horizontal spacing ──────────────────────────────────────── */
+
+.inline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.inline-2xs { gap: var(--space-1); }
+.inline-xs  { gap: var(--space-2); }
+.inline-sm  { gap: var(--space-3); }
+.inline-md  { gap: var(--space-4); }
+.inline-lg  { gap: var(--space-6); }
+.inline-xl  { gap: var(--space-8); }
+
+/* ─── Inset — internal padding ─────────────────────────────────────────── */
+
+.inset-xs  { padding: var(--space-2); }
+.inset-sm  { padding: var(--space-3); }
+.inset-md  { padding: var(--space-4); }
+.inset-lg  { padding: var(--space-6); }
+.inset-xl  { padding: var(--space-8); }
+.inset-2xl { padding: var(--space-10); }
+
+/* Squish variants (more horizontal than vertical) */
+.inset-squish-sm { padding: var(--space-2) var(--space-3); }
+.inset-squish-md { padding: var(--space-3) var(--space-6); }
+.inset-squish-lg { padding: var(--space-4) var(--space-8); }
+
+/* ─── Section vertical rhythm ───────────────────────────────────────────── */
+/*
+ * Section spacing follows a modular scale.
+ * On mobile sections are tighter to preserve reading flow.
+ * These override the Section component's defaults when needed.
+ */
+
+.section-xs  { padding-block: var(--space-12); }
+.section-sm  { padding-block: var(--space-16); }
+.section-md  { padding-block: var(--space-24); }
+.section-lg  { padding-block: var(--space-32); }
+.section-xl  { padding-block: var(--space-40); }
+
+@media (min-width: 1024px) {
+  .section-xs  { padding-block: var(--space-16); }
+  .section-sm  { padding-block: var(--space-24); }
+  .section-md  { padding-block: var(--space-32); }
+  .section-lg  { padding-block: var(--space-40); }
+  .section-xl  { padding-block: var(--space-48); }
+}

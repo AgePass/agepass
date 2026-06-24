@@ -1,4 +1,7 @@
 @import "../styles/tokens.css";
+@import "../styles/spacing.css";
+@import "../styles/animations.css";
+@import "../styles/effects.css";
 @import "tailwindcss";
 
 /* ─── Tailwind v4 theme bridge ─────────────────────────────────────────────
