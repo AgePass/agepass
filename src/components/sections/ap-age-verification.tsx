@@ -33,14 +33,14 @@ export function ApAgeVerification() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="max-w-[600px] mb-16 lg:mb-20"
         >
           <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--color-brand-600)] mb-5 block">
-            Vérifier l&apos;âge ne suffit pas
+            Le maillon manquant
           </span>
           <h2 className="text-[2.4rem] sm:text-[3rem] font-bold leading-[1.08] tracking-[-0.035em] text-[var(--text-primary)]">
-            Le vrai enjeu :{" "}
+            Une pièce d&apos;identité peut être prêtée.{" "}
             <span
               style={{
                 background: "linear-gradient(135deg, var(--color-brand-700) 0%, var(--color-brand-500) 100%)",
@@ -49,11 +49,11 @@ export function ApAgeVerification() {
                 backgroundClip: "text",
               }}
             >
-              s&apos;assurer que la bonne personne retire.
+              Un visage, non.
             </span>
           </h2>
           <p className="mt-5 text-[var(--text-secondary)] leading-relaxed">
-            Vérifier l&apos;âge n&apos;a de valeur que si la personne qui présente la pièce est réellement son titulaire. Sans cette étape, la vérification reste contournable.
+            Vérifier l&apos;âge n&apos;a de valeur que si la personne qui présente la pièce est réellement son titulaire. AgePass vérifie les deux.
           </p>
         </motion.div>
 
@@ -65,7 +65,7 @@ export function ApAgeVerification() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             className="rounded-2xl border border-[var(--border-default)] bg-white p-8"
           >
             <p className="text-xs font-semibold uppercase tracking-widest text-[var(--text-tertiary)] mb-6">Pièce d&apos;identité seule</p>
@@ -114,7 +114,7 @@ export function ApAgeVerification() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.1 }}
             className="rounded-2xl border border-[var(--color-brand-200)] bg-white p-8"
             style={{ boxShadow: "0 0 0 4px rgba(26,71,245,0.04)" }}
           >
@@ -170,7 +170,7 @@ export function ApAgeVerification() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: i * 0.1 }}
               className="flex flex-col gap-4"
             >
               <p
