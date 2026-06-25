@@ -76,7 +76,7 @@ export function HeroContent() {
             backgroundClip: "text",
           }}
         >
-          pour le retrait
+          pour le retrait{" "}
           <br className="hidden sm:block" />
           autonome.
         </span>

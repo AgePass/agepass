@@ -27,14 +27,22 @@ export function CtaBannerSection() {
 
             {/* Dot grid */}
             <div
-              className="absolute inset-0 pointer-events-none opacity-30"
+              className="absolute inset-0 pointer-events-none opacity-[0.25]"
               style={{
-                backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)",
-                backgroundSize: "28px 28px",
-                maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%)",
-                WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%)",
+                backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px)",
+                backgroundSize: "24px 24px",
+                maskImage: "radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 80%)",
+                WebkitMaskImage: "radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 80%)",
               }}
             />
+            {/* Grain texture */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.025]" aria-hidden="true">
+              <filter id="noise-cta">
+                <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+                <feColorMatrix type="saturate" values="0" />
+              </filter>
+              <rect width="100%" height="100%" filter="url(#noise-cta)" />
+            </svg>
 
             {/* Content */}
             <div className="relative z-10 flex flex-col items-center gap-8 text-center max-w-3xl mx-auto">

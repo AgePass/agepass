@@ -83,9 +83,13 @@ export function SocialProofSection() {
         <Reveal className="flex flex-col items-center gap-4 text-center mb-16">
           <Label>Ils nous font confiance</Label>
           <Heading size="3xl" balance className="max-w-xl">
-            Des équipes qui dorment<br />
+            Des équipes qui dorment{" "}
+            <br />
             <span className="text-gradient-brand">mieux la nuit.</span>
           </Heading>
+          <p className="text-[var(--text-secondary)] text-lg max-w-sm text-balance mt-1">
+            40+ plateformes européennes font confiance à AgePass pour leur mise en conformité.
+          </p>
         </Reveal>
 
         {/* Logo band */}
