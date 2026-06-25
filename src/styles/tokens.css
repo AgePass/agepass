@@ -1,0 +1,211 @@
+/*
+ * Design Tokens — AgePass
+ * Source of truth for all visual decisions.
+ * Using CSS custom properties so every token is overridable per theme.
+ */
+
+:root {
+  /* ─────────────────────────────────────────────
+   * COLOR PALETTE
+   * Inspiré de Linear/Vercel : neutre froid + accent unique.
+   * La couleur principale reflète confiance + technologie.
+   * ──────────────────────────────────────────── */
+
+  /* Brand — Bleu souverain : confiance, conformité, innovation */
+  --color-brand-50: #eef5ff;
+  --color-brand-100: #d9e8ff;
+  --color-brand-200: #bcd5ff;
+  --color-brand-300: #8eb9ff;
+  --color-brand-400: #5a92ff;
+  --color-brand-500: #3366ff;   /* Primary action */
+  --color-brand-600: #1a47f5;
+  --color-brand-700: #1338e0;
+  --color-brand-800: #162db5;
+  --color-brand-900: #182c8e;
+  --color-brand-950: #131c57;
+
+  /* Neutral — Gris froid (slate) : sérieux, premium */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-150: #eaeff5;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  /* Accent Vert — succès, vérification, conformité */
+  --color-success-50:  #f0fdf4;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+
+  /* Accent Ambre — avertissement */
+  --color-warning-50:  #fffbeb;
+  --color-warning-500: #f59e0b;
+
+  /* Accent Rouge — erreur */
+  --color-error-50:  #fef2f2;
+  --color-error-500: #ef4444;
+
+  /* ─────────────────────────────────────────────
+   * SEMANTIC TOKENS — Light Theme
+   * Nommés par rôle, pas par valeur : on peut changer la valeur
+   * sans chercher partout dans le code.
+   * ──────────────────────────────────────────── */
+
+  /* Backgrounds */
+  --bg-page:        var(--color-neutral-0);
+  --bg-subtle:      var(--color-neutral-50);
+  --bg-muted:       var(--color-neutral-100);
+  --bg-emphasis:    var(--color-neutral-150);
+  --bg-inverse:     var(--color-neutral-900);
+  --bg-brand:       var(--color-brand-500);
+  --bg-brand-subtle: var(--color-brand-50);
+
+  /* Borders */
+  --border-default:  var(--color-neutral-200);
+  --border-strong:   var(--color-neutral-300);
+  --border-brand:    var(--color-brand-500);
+
+  /* Text */
+  --text-primary:    var(--color-neutral-900);
+  --text-secondary:  var(--color-neutral-600);
+  --text-tertiary:   var(--color-neutral-400);
+  --text-inverse:    var(--color-neutral-0);
+  --text-brand:      var(--color-brand-600);
+  --text-on-brand:   var(--color-neutral-0);
+
+  /* ─────────────────────────────────────────────
+   * TYPOGRAPHY
+   * Geist (Vercel) : moderne, lisible, premium.
+   * Two axes : Sans pour l'interface, Mono pour le code.
+   * ──────────────────────────────────────────── */
+
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", "Fira Code", monospace;
+
+  /* Scale — Major Third (1.25) */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+  --text-6xl:  3.75rem;   /* 60px */
+  --text-7xl:  4.5rem;    /* 72px */
+  --text-8xl:  6rem;      /* 96px */
+
+  --leading-tight:  1.2;
+  --leading-snug:   1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  --tracking-tighter: -0.04em;
+  --tracking-tight:   -0.025em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.025em;
+  --tracking-wider:   0.05em;
+  --tracking-widest:  0.12em;
+
+  /* ─────────────────────────────────────────────
+   * SPACING — 4px base grid
+   * Cohérence absolue : tout espacement est multiple de 4.
+   * ──────────────────────────────────────────── */
+
+  --space-0:   0px;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+  --space-40:  160px;
+  --space-48:  192px;
+
+  /* ─────────────────────────────────────────────
+   * BORDER RADIUS
+   * ──────────────────────────────────────────── */
+
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-3xl:  32px;
+  --radius-full: 9999px;
+
+  /* ─────────────────────────────────────────────
+   * SHADOWS — Subtiles, premium (pas de box-shadows agressives)
+   * ──────────────────────────────────────────── */
+
+  --shadow-xs:  0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --shadow-md:  0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+  --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.07), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+  --shadow-brand: 0 0 0 3px rgb(51 102 255 / 0.2);
+  --shadow-glow: 0 0 40px rgb(51 102 255 / 0.15), 0 0 80px rgb(51 102 255 / 0.08);
+
+  /* ─────────────────────────────────────────────
+   * MOTION — Easings et durées cohérents
+   * GSAP + Framer Motion partagent ces valeurs via tokens.
+   * ──────────────────────────────────────────── */
+
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out:    cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-instant: 100ms;
+  --duration-fast:    150ms;
+  --duration-normal:  250ms;
+  --duration-slow:    400ms;
+  --duration-slower:  600ms;
+  --duration-slowest: 900ms;
+
+  /* ─────────────────────────────────────────────
+   * LAYOUT
+   * ──────────────────────────────────────────── */
+
+  --container-sm:   640px;
+  --container-md:   768px;
+  --container-lg:   1024px;
+  --container-xl:   1280px;
+  --container-2xl:  1440px;
+
+  --gutter-sm:  var(--space-4);
+  --gutter-md:  var(--space-6);
+  --gutter-lg:  var(--space-8);
+  --gutter-xl:  var(--space-12);
+
+  /* Section padding vertical */
+  --section-padding-sm:  var(--space-16);
+  --section-padding-md:  var(--space-24);
+  --section-padding-lg:  var(--space-32);
+  --section-padding-xl:  var(--space-40);
+
+  /* Z-index scale */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-sticky:  100;
+  --z-overlay: 200;
+  --z-modal:   300;
+  --z-toast:   400;
+  --z-cursor:  9999;
+}
