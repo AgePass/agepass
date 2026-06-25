@@ -1,89 +1,63 @@
 "use client";
 
-import * as React from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, Zap, Lock, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Zap, Lock, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { BorderBeam } from "@/components/motion/border-beam";
-import { variants, AnimationConfig } from "@/lib/animations/config";
+import { FloatingPhone } from "@/components/ui/floating-phone";
+import { ParticleField } from "@/components/ui/particle-field";
+import { AnimationConfig } from "@/lib/animations/config";
 
-/* ─── Floating micro-card ─────────────────────────────────────────────── */
+const ease = AnimationConfig.entrance.ease;
+
+/* ─── Floating micro-card ──────────────────────────────────────────────── */
 
 interface FloatingCardProps {
-  icon:    React.ReactNode;
-  label:   string;
-  value:   string;
-  color:   "brand" | "success" | "neutral";
-  delay?:  number;
-  floatY?: [number, number];
+  icon:       React.ReactNode;
+  label:      string;
+  value:      string;
+  accent:     "brand" | "success" | "neutral" | "violet";
+  delay?:     number;
+  floatAmp?:  number;
   className?: string;
 }
 
-const colorTokens = {
-  brand: {
-    bg:   "bg-white border-[var(--border-default)]",
-    icon: "bg-[var(--color-brand-50)] text-[var(--color-brand-600)]",
-    text: "text-[var(--color-brand-700)]",
-  },
-  success: {
-    bg:   "bg-white border-[var(--border-default)]",
-    icon: "bg-[var(--color-success-50)] text-[var(--color-success-600)]",
-    text: "text-[var(--color-success-600)]",
-  },
-  neutral: {
-    bg:   "bg-white border-[var(--border-default)]",
-    icon: "bg-[var(--bg-muted)] text-[var(--text-secondary)]",
-    text: "text-[var(--text-primary)]",
-  },
+const accentMap = {
+  brand:   { icon: "bg-[var(--color-brand-50)] text-[var(--color-brand-600)]",   value: "text-[var(--color-brand-700)]" },
+  success: { icon: "bg-[var(--color-success-50)] text-[var(--color-success-600)]", value: "text-[var(--color-success-600)]" },
+  neutral: { icon: "bg-[var(--bg-muted)] text-[var(--text-secondary)]",           value: "text-[var(--text-primary)]" },
+  violet:  { icon: "bg-violet-50 text-violet-600",                                value: "text-violet-700" },
 };
 
-function FloatingCard({ icon, label, value, color, delay = 0, floatY = [-6, 6], className }: FloatingCardProps) {
-  const tokens = colorTokens[color];
-
+function FloatingCard({ icon, label, value, accent, delay = 0, floatAmp = 6, className }: FloatingCardProps) {
+  const colors = accentMap[accent];
   return (
     <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden:  { opacity: 0, scale: 0.85, y: 12 },
-        visible: {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          transition: { duration: 0.7, ease: AnimationConfig.entrance.ease, delay },
-        },
-      }}
-      className={cn("absolute z-20", className)}
+      initial={{ opacity: 0, scale: 0.8, y: 16 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.7, ease, delay }}
+      className={cn("absolute z-30", className)}
     >
       <motion.div
-        animate={{ y: floatY }}
-        transition={{
-          duration: 3.5 + delay,
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
+        animate={{ y: [-floatAmp / 2, floatAmp / 2] }}
+        transition={{ duration: 2.8 + delay * 0.4, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
       >
-        {/* Halo derrière la card */}
-        <div className="absolute inset-0 rounded-2xl blur-xl opacity-20 bg-[var(--color-brand-300)] scale-110 pointer-events-none" />
-
-        <div
-          className={cn(
-            "relative flex items-center gap-3",
-            "px-4 py-3 rounded-2xl border",
-            "shadow-[var(--shadow-lg)]",
-            "backdrop-blur-sm",
-            tokens.bg
-          )}
-        >
-          <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center shrink-0", tokens.icon)}>
+        {/* Halo derrière */}
+        <div className="absolute -inset-2 rounded-2xl bg-[var(--color-brand-200)] opacity-20 blur-xl pointer-events-none" />
+        {/* Card */}
+        <div className={cn(
+          "relative flex items-center gap-3 pl-3 pr-4 py-2.5 rounded-2xl",
+          "bg-white/90 backdrop-blur-md",
+          "border border-white/60",
+          "shadow-[0_8px_32px_rgba(0,0,0,0.10),0_2px_8px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)]",
+        )}>
+          <div className={cn("w-7 h-7 rounded-xl flex items-center justify-center shrink-0", colors.icon)}>
             {icon}
           </div>
-          <div className="flex flex-col min-w-0">
-            <span className="text-[10px] font-medium text-[var(--text-tertiary)] uppercase tracking-wider leading-none mb-0.5">
+          <div className="flex flex-col">
+            <span className="text-[9px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)] leading-none mb-0.5">
               {label}
             </span>
-            <span className={cn("text-sm font-semibold leading-none", tokens.text)}>
+            <span className={cn("text-[12px] font-bold leading-none", colors.value)}>
               {value}
             </span>
           </div>
@@ -93,193 +67,191 @@ function FloatingCard({ icon, label, value, color, delay = 0, floatY = [-6, 6], 
   );
 }
 
-/* ─── Verification orb — le coeur de la composition ──────────────────── */
+/* ─── Dashboard card — tableau de bord B2B en arrière-plan ──────────────── */
 
-function VerificationOrb() {
+function DashboardCard() {
+  const metrics = [
+    { label: "Vérifications aujourd'hui", value: "24 891", delta: "+12%", color: "text-[var(--color-success-600)]" },
+    { label: "Taux de conformité",         value: "99.97%",  delta: "SLA",  color: "text-[var(--color-brand-600)]" },
+    { label: "Temps de réponse moy.",      value: "312 ms",  delta: "p95",  color: "text-[var(--text-primary)]" },
+  ];
+
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
-
-      {/* Anneau externe — rotation lente */}
+    <motion.div
+      initial={{ opacity: 0, x: 24, y: -16 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ duration: 0.9, ease, delay: 1.0 }}
+      className="absolute -top-6 -right-4 w-[220px] z-20"
+    >
       <motion.div
-        className="absolute w-[340px] h-[340px] rounded-full border border-dashed border-[var(--color-brand-200)]"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 40, ease: "linear", repeat: Infinity }}
-        aria-hidden="true"
+        animate={{ y: [-4, 4] }}
+        transition={{ duration: 5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
       >
-        {/* Marqueur sur l'anneau */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[var(--color-brand-400)]" />
-      </motion.div>
-
-      {/* Anneau moyen — rotation inverse */}
-      <motion.div
-        className="absolute w-[260px] h-[260px] rounded-full border border-[var(--color-brand-100)]"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-        aria-hidden="true"
-      >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-indigo-400" />
-      </motion.div>
-
-      {/* Disque intérieur — le glow central */}
-      <motion.div
-        className="absolute w-[180px] h-[180px] rounded-full"
-        style={{
-          background: "radial-gradient(circle, rgba(51,102,255,0.15) 0%, rgba(99,102,241,0.08) 50%, transparent 70%)",
-        }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.8, 1, 0.8] }}
-        transition={{ duration: 3, ease: "easeInOut", repeat: Infinity }}
-        aria-hidden="true"
-      />
-
-      {/* Badge central */}
-      <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1], delay: 0.6 }}
-        className="relative z-10 w-24 h-24 rounded-[28px] bg-white border border-[var(--border-default)] shadow-[var(--shadow-xl)] flex items-center justify-center"
-      >
-        {/* Glow derrière le badge */}
-        <div className="absolute inset-0 rounded-[28px] bg-[var(--color-brand-500)] opacity-10 blur-xl scale-150" />
-
-        <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--color-brand-500)] to-indigo-500 flex items-center justify-center shadow-[0_4px_12px_rgba(51,102,255,0.4)]">
-          <ShieldCheck className="w-5 h-5 text-white" strokeWidth={2.5} />
+        <div className={cn(
+          "rounded-2xl overflow-hidden",
+          "bg-[var(--color-neutral-900)]/95 backdrop-blur-xl",
+          "border border-white/10",
+          "shadow-[0_16px_48px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.06)]",
+          "p-4 flex flex-col gap-3",
+        )}>
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-semibold text-[var(--color-neutral-400)] uppercase tracking-wider">
+              Dashboard Conformité
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success-500)] animate-pulse" />
+              <span className="text-[9px] text-[var(--color-success-400)]">Live</span>
+            </span>
+          </div>
+          {/* Metrics */}
+          <div className="flex flex-col gap-2.5">
+            {metrics.map((m) => (
+              <div key={m.label} className="flex items-center justify-between gap-2">
+                <span className="text-[10px] text-[var(--color-neutral-500)] leading-tight">{m.label}</span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className={cn("text-[11px] font-bold tabular-nums", m.color)}>{m.value}</span>
+                  <span className="text-[9px] text-[var(--color-neutral-600)] bg-[var(--color-neutral-800)] px-1 py-0.5 rounded">{m.delta}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Sparkline */}
+          <div className="h-8 flex items-end gap-0.5">
+            {[3,5,4,7,6,8,7,9,8,11,9,12,10,13,11,14,12,16,14,18].map((v, i) => (
+              <motion.div
+                key={i}
+                className="flex-1 rounded-sm bg-[var(--color-brand-500)]"
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                style={{ height: `${(v / 18) * 100}%`, opacity: 0.4 + (i / 20) * 0.6, transformOrigin: "bottom" }}
+                transition={{ duration: 0.4, delay: 1.2 + i * 0.03, ease: "easeOut" }}
+              />
+            ))}
+          </div>
         </div>
       </motion.div>
-
-      {/* Tick d'approbation animé */}
-      <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1], delay: 1.1 }}
-        className="absolute top-[18%] right-[18%] w-7 h-7 rounded-full bg-[var(--color-success-500)] flex items-center justify-center shadow-lg z-20"
-      >
-        <CheckCircle2 className="w-4 h-4 text-white" strokeWidth={2.5} />
-      </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
-/* ─── HeroVisual ──────────────────────────────────────────────────────── */
+/* ─── HeroVisual ───────────────────────────────────────────────────────── */
 
 export function HeroVisual() {
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={variants.fadeIn}
+    <div
       className="relative w-full h-full flex items-center justify-center"
       aria-hidden="true"
     >
-      {/* ── Halos d'ambiance ──────────────────────────────────────────── */}
+      {/* ── Particules ambiantes ─────────────────────────────────────── */}
+      <ParticleField />
+
+      {/* ── Halos de lumière ─────────────────────────────────────────── */}
+      {/* Halo principal bleu — en haut à droite */}
       <div
-        className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full pointer-events-none"
+        className="absolute pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 65%)",
+          top: "-15%", right: "-10%",
+          width: 560, height: 560,
+          background: "radial-gradient(circle, rgba(51,102,255,0.20) 0%, rgba(99,102,241,0.12) 40%, transparent 70%)",
           filter: "blur(40px)",
         }}
       />
+      {/* Halo violet — en bas à gauche */}
       <div
-        className="absolute bottom-[5%] left-[-10%] w-[400px] h-[400px] rounded-full pointer-events-none"
+        className="absolute pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(51,102,255,0.14) 0%, transparent 65%)",
+          bottom: "0%", left: "-5%",
+          width: 400, height: 400,
+          background: "radial-gradient(circle, rgba(139,92,246,0.16) 0%, transparent 65%)",
           filter: "blur(50px)",
         }}
       />
+      {/* Halo subtil central */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "30%", left: "30%",
+          width: 300, height: 300,
+          background: "radial-gradient(circle, rgba(51,102,255,0.08) 0%, transparent 60%)",
+          filter: "blur(30px)",
+        }}
+      />
 
-      {/* ── Conteneur principal ───────────────────────────────────────── */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.92, y: 24 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: AnimationConfig.entrance.ease, delay: 0.3 }}
-        className={cn(
-          "relative w-full max-w-[520px] aspect-[4/4.2] lg:aspect-[4/4.5]",
-          "rounded-[var(--radius-3xl)] overflow-visible",
-        )}
-      >
-        {/* Surface principale — glass panel */}
-        <div className={cn(
-          "relative w-full h-full rounded-[var(--radius-3xl)] overflow-hidden",
-          "bg-gradient-to-br from-white via-[var(--bg-subtle)] to-[var(--color-brand-50)]",
-          "border border-[var(--border-default)]",
-          "shadow-[0_32px_64px_-12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.04)]",
-        )}>
-          {/* Grille de fond */}
-          <div
-            className="absolute inset-0 opacity-40"
-            style={{
-              backgroundImage: "radial-gradient(circle, var(--color-neutral-300) 1px, transparent 1px)",
-              backgroundSize: "28px 28px",
-              maskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%)",
-              WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%)",
-            }}
-            aria-hidden="true"
-          />
+      {/* ── Grille de fond ───────────────────────────────────────────── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(51,102,255,0.12) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          maskImage: "radial-gradient(ellipse 85% 85% at 50% 50%, black 20%, transparent 80%)",
+          WebkitMaskImage: "radial-gradient(ellipse 85% 85% at 50% 50%, black 20%, transparent 80%)",
+        }}
+      />
 
-          {/* Gradient subtil en haut */}
-          <div
-            className="absolute inset-x-0 top-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(180deg, rgba(51,102,255,0.06) 0%, transparent 100%)",
-            }}
-          />
+      {/* ── Zone de composition ──────────────────────────────────────── */}
+      <div className="relative flex items-center justify-center w-full max-w-[480px] mx-auto">
 
-          {/* Orb central avec les anneaux */}
-          <VerificationOrb />
+        {/* Dashboard B2B — arrière-plan top right */}
+        <DashboardCard />
 
-          {/* Border beam — visible sur le panel principal */}
-          <BorderBeam
-            duration={12}
-            colorFrom="rgba(51,102,255,0.6)"
-            colorTo="rgba(139,92,246,0.4)"
-          />
-        </div>
+        {/* Téléphone principal — centre */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.0, ease, delay: 0.4 }}
+          className="relative z-10"
+        >
+          <motion.div
+            animate={{ y: [-6, 6] }}
+            transition={{ duration: 4.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+          >
+            <FloatingPhone />
+          </motion.div>
+        </motion.div>
 
-        {/* ── Floating cards — positionnées en dehors du panel ──────── */}
+        {/* ── Micro-cards flottantes ────────────────────────────────── */}
 
-        {/* Card 1 — Vérification confirmée (haut gauche) */}
         <FloatingCard
-          icon={<CheckCircle2 className="w-4 h-4" />}
-          label="Statut"
-          value="Âge vérifié"
-          color="success"
-          delay={0.8}
-          floatY={[-5, 5]}
-          className="-left-12 top-[12%] xl:-left-16"
-        />
-
-        {/* Card 2 — Conformité (bas gauche) */}
-        <FloatingCard
-          icon={<ShieldCheck className="w-4 h-4" />}
+          icon={<ShieldCheck className="w-3.5 h-3.5" />}
           label="Conformité"
-          value="eIDAS 2.0"
-          color="brand"
-          delay={1.0}
-          floatY={[-7, 4]}
-          className="-left-10 bottom-[18%] xl:-left-14"
+          value="eIDAS 2.0 ✓"
+          accent="brand"
+          delay={1.1}
+          floatAmp={5}
+          className="-left-8 top-[22%] lg:-left-12"
         />
 
-        {/* Card 3 — Vitesse (haut droit) */}
         <FloatingCard
-          icon={<Zap className="w-4 h-4" />}
+          icon={<Zap className="w-3.5 h-3.5" />}
           label="Temps de réponse"
           value="< 500 ms"
-          color="neutral"
-          delay={1.2}
-          floatY={[-4, 8]}
-          className="-right-10 top-[22%] xl:-right-14"
+          accent="neutral"
+          delay={1.3}
+          floatAmp={7}
+          className="-left-6 bottom-[24%] lg:-left-10"
         />
 
-        {/* Card 4 — Zéro donnée (bas droit) */}
         <FloatingCard
-          icon={<Lock className="w-4 h-4" />}
+          icon={<Lock className="w-3.5 h-3.5" />}
           label="Données stockées"
-          value="Aucune"
-          color="neutral"
-          delay={1.4}
-          floatY={[-6, 6]}
-          className="-right-10 bottom-[14%] xl:-right-14"
+          value="Zéro octet"
+          accent="success"
+          delay={1.5}
+          floatAmp={6}
+          className="-right-8 bottom-[18%] lg:-right-12"
         />
-      </motion.div>
-    </motion.div>
+
+        <FloatingCard
+          icon={<Globe className="w-3.5 h-3.5" />}
+          label="Couverture"
+          value="12 pays UE"
+          accent="violet"
+          delay={1.7}
+          floatAmp={8}
+          className="-right-4 top-[55%] lg:-right-8"
+        />
+      </div>
+    </div>
   );
 }

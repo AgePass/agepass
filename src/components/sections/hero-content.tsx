@@ -1,193 +1,186 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ShieldCheck, Zap, Globe } from "lucide-react";
+import { ArrowRight, ShieldCheck, Zap, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/motion/magnetic";
 import { AnimationConfig } from "@/lib/animations/config";
 
-/* ─── Animation helpers ───────────────────────────────────────────────── */
+const ease = AnimationConfig.entrance.ease;
 
-const ease   = AnimationConfig.entrance.ease;
-const slower = AnimationConfig.entrance.duration * 1.1;
-
+/* ─── Item animation factory ───────────────────────────────────────────── */
 function item(delay: number) {
   return {
-    hidden:  { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: slower, ease, delay } },
+    initial:  { opacity: 0, y: 22 },
+    animate:  { opacity: 1, y: 0, transition: { duration: 0.7, ease, delay } },
   };
 }
 
-/* ─── Benefit row ─────────────────────────────────────────────────────── */
-
-const benefits = [
-  { icon: ShieldCheck, text: "Conforme RGPD & eIDAS 2.0" },
-  { icon: Zap,         text: "Réponse en moins de 500 ms" },
-  { icon: Globe,       text: "Déployé dans 12 pays européens" },
+/* ─── Benefits ─────────────────────────────────────────────────────────── */
+const BENEFITS = [
+  { Icon: ShieldCheck, text: "Conforme DSA, eIDAS 2.0 & loi Protéger les mineurs" },
+  { Icon: Zap,         text: "Intégration en 48 h — Go-Live en moins d'une semaine" },
+  { Icon: Lock,        text: "Zéro donnée personnelle collectée ou transmise" },
 ] as const;
 
-/* ─── HeroContent ─────────────────────────────────────────────────────── */
+/* ─── Avatars de social proof ───────────────────────────────────────────── */
+const AVATARS = [
+  { initials: "CA", gradient: "from-[var(--color-brand-500)] to-indigo-500" },
+  { initials: "MV", gradient: "from-indigo-500 to-violet-500" },
+  { initials: "JL", gradient: "from-violet-500 to-purple-600" },
+  { initials: "SB", gradient: "from-slate-600 to-slate-700" },
+];
+
+/* ─── HeroContent ───────────────────────────────────────────────────────── */
 
 export function HeroContent() {
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      className="flex flex-col items-start gap-0"
-    >
-      {/* ── Badge ─────────────────────────────────────────────────────── */}
-      <motion.div variants={item(0.1)} className="mb-8">
+    <div className="flex flex-col items-start">
+
+      {/* ── Badge ────────────────────────────────────────────────────── */}
+      <motion.div {...item(0.05)} className="mb-8">
         <span className={[
-          "inline-flex items-center gap-2",
-          "px-3 py-1.5 rounded-full",
+          "inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full",
           "bg-[var(--color-brand-50)] border border-[var(--color-brand-200)]",
-          "text-[11px] font-semibold tracking-wider uppercase",
+          "text-[11px] font-semibold tracking-[0.06em] uppercase",
           "text-[var(--color-brand-700)]",
+          "shadow-[0_0_0_4px_rgba(51,102,255,0.06)]",
         ].join(" ")}>
-          {/* Dot animé */}
-          <span className="relative flex h-1.5 w-1.5">
+          <span className="relative flex h-1.5 w-1.5 shrink-0">
             <motion.span
-              className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-brand-400)] opacity-75"
-              animate={{ scale: [1, 2, 1], opacity: [0.75, 0, 0.75] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-brand-500)] opacity-75"
+              animate={{ scale: [1, 2.2, 1], opacity: [0.75, 0, 0.75] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.5 }}
             />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-brand-500)]" />
           </span>
-          Conforme eIDAS 2.0 · Certifié ANSSI
+          Certifié ANSSI · Conforme eIDAS 2.0
         </span>
       </motion.div>
 
-      {/* ── Headline ──────────────────────────────────────────────────── */}
+      {/* ── Headline ─────────────────────────────────────────────────── */}
       <motion.h1
-        variants={item(0.2)}
-        className={[
-          "text-[2.6rem] leading-[1.08] font-bold tracking-[-0.04em]",
-          "sm:text-[3.2rem]",
-          "lg:text-[3.6rem]",
-          "xl:text-[4.2rem]",
-          "text-[var(--text-primary)]",
-          "text-balance",
-        ].join(" ")}
+        {...item(0.15)}
+        className="text-[2.75rem] sm:text-[3.4rem] lg:text-[3.8rem] xl:text-[4.4rem] font-bold leading-[1.04] tracking-[-0.045em] text-[var(--text-primary)] text-balance"
       >
-        Vérifiez l&apos;âge.{" "}
-        <br className="hidden sm:block" />
+        L&apos;infrastructure
+        <br />
+        de conformité
+        <br />
         <span
-          className="inline-block"
           style={{
-            background: "linear-gradient(135deg, var(--color-brand-700) 0%, var(--color-brand-500) 40%, #6366f1 70%, #8b5cf6 100%)",
+            background: "linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-brand-500) 30%, #6366f1 60%, #8b5cf6 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
           }}
         >
-          Protégez tout
+          pour le retrait
           <br className="hidden sm:block" />
-          le reste.
+          autonome.
         </span>
       </motion.h1>
 
-      {/* ── Sous-titre ────────────────────────────────────────────────── */}
+      {/* ── Sous-titre ───────────────────────────────────────────────── */}
       <motion.p
-        variants={item(0.35)}
+        {...item(0.3)}
         className={[
-          "mt-6 text-lg leading-[1.65] text-[var(--text-secondary)]",
-          "max-w-[480px]",
-          "text-pretty",
+          "mt-6 text-lg sm:text-xl leading-[1.65]",
+          "text-[var(--text-secondary)]",
+          "max-w-[500px] text-pretty",
         ].join(" ")}
       >
-        AgePass vérifie l&apos;âge de vos utilisateurs en temps réel,{" "}
-        sans jamais stocker, transmettre ni exposer leurs données personnelles.{" "}
-        La première solution souveraine certifiée eIDAS&nbsp;2.0.
+        DSA, eIDAS&nbsp;2.0, loi Protéger les&nbsp;mineurs — chaque texte impose
+        de nouvelles obligations. AgePass les absorbe toutes, sans modifier
+        votre produit, sans stocker un seul octet.
       </motion.p>
 
-      {/* ── CTA ───────────────────────────────────────────────────────── */}
+      {/* ── CTAs ─────────────────────────────────────────────────────── */}
       <motion.div
-        variants={item(0.48)}
+        {...item(0.45)}
         className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3"
       >
-        <Magnetic strength={0.25}>
-          <Button
-            variant="brand"
-            size="lg"
-            iconRight={<ArrowRight />}
-            asChild
-          >
-            <Link href="/demo">
+        <Magnetic strength={0.22}>
+          <Button variant="brand" size="lg" asChild>
+            <Link href="/demo" className="group inline-flex items-center gap-2">
               Demander une démo
+              <motion.span
+                className="inline-flex"
+                animate={{ x: [0, 3, 0] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+              >
+                <ArrowRight className="w-4 h-4" />
+              </motion.span>
             </Link>
           </Button>
         </Magnetic>
 
-        <Magnetic strength={0.2}>
-          <Button
-            variant="outline"
-            size="lg"
-            asChild
-          >
-            <Link href="/technologie">
-              Voir la technologie
-            </Link>
+        <Magnetic strength={0.18}>
+          <Button variant="outline" size="lg" asChild>
+            <Link href="/solution">Voir la solution</Link>
           </Button>
         </Magnetic>
       </motion.div>
 
-      {/* ── Benefits ──────────────────────────────────────────────────── */}
+      {/* ── Bénéfices ────────────────────────────────────────────────── */}
       <motion.ul
-        variants={item(0.62)}
-        className="mt-10 flex flex-col gap-3 list-none"
-        aria-label="Bénéfices clés"
+        {...item(0.58)}
+        className="mt-10 flex flex-col gap-3.5 list-none"
+        aria-label="Atouts clés d'AgePass"
       >
-        {benefits.map(({ icon: Icon, text }) => (
+        {BENEFITS.map(({ Icon, text }) => (
           <li key={text} className="flex items-center gap-3">
             <span className="w-5 h-5 rounded-full bg-[var(--color-brand-50)] border border-[var(--color-brand-200)] flex items-center justify-center shrink-0">
               <Icon className="w-2.5 h-2.5 text-[var(--color-brand-600)]" strokeWidth={2.5} />
             </span>
-            <span className="text-sm text-[var(--text-secondary)]">{text}</span>
+            <span className="text-sm text-[var(--text-secondary)] leading-snug">{text}</span>
           </li>
         ))}
       </motion.ul>
 
-      {/* ── Social proof micro ────────────────────────────────────────── */}
+      {/* ── Social proof ─────────────────────────────────────────────── */}
       <motion.div
-        variants={item(0.75)}
-        className="mt-12 flex items-center gap-3"
+        {...item(0.72)}
+        className="mt-12 flex items-center gap-4"
       >
         {/* Avatars empilés */}
         <div className="flex -space-x-2" aria-hidden="true">
-          {[
-            { initials: "CA", bg: "bg-[var(--color-brand-500)]" },
-            { initials: "MV", bg: "bg-indigo-500" },
-            { initials: "JL", bg: "bg-violet-500" },
-            { initials: "SB", bg: "bg-slate-600" },
-          ].map(({ initials, bg }) => (
+          {AVATARS.map(({ initials, gradient }) => (
             <div
               key={initials}
               className={[
                 "w-8 h-8 rounded-full flex items-center justify-center",
-                "text-white text-[10px] font-semibold",
+                "text-white text-[10px] font-bold",
                 "border-2 border-white",
-                bg,
+                "bg-gradient-to-br",
+                gradient,
               ].join(" ")}
             >
               {initials}
             </div>
           ))}
+          {/* +N */}
+          <div className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold bg-[var(--bg-muted)] border-2 border-white text-[var(--text-secondary)]">
+            +36
+          </div>
         </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="flex items-center gap-0.5" aria-label="5 étoiles">
+
+        {/* Texte + étoiles */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-0.5" role="img" aria-label="Note 4,9 sur 5">
             {Array.from({ length: 5 }).map((_, i) => (
-              <svg key={i} className="w-3 h-3 text-amber-400 fill-current" viewBox="0 0 20 20" aria-hidden="true">
+              <svg key={i} className="w-3 h-3 fill-amber-400" viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
               </svg>
             ))}
+            <span className="ml-1 text-[11px] font-semibold text-[var(--text-primary)]">4,9</span>
           </div>
-          <p className="text-xs text-[var(--text-tertiary)]">
-            Déjà <strong className="text-[var(--text-primary)] font-semibold">+40 entreprises</strong> nous font confiance
+          <p className="text-[12px] text-[var(--text-tertiary)]">
+            <strong className="font-semibold text-[var(--text-primary)]">+40 plateformes</strong> conformes en Europe
           </p>
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
