@@ -88,7 +88,7 @@ function RegulationCard() {
               className="absolute text-[1.3rem] font-black leading-none text-[#0751d8]"
               style={{ left: x, top: y, transform: "translate(-50%, -50%)" }}
             >
-              *
+              &#9733;
             </span>
           );
         })}
@@ -273,10 +273,10 @@ function ShopicCard() {
 
 function AutomationFlow() {
   const steps = [
-    { label: "Commande\ndigitalisee", Icon: Package, color: "#6b12d6" },
-    { label: "Paiement\ndigitalise", Icon: CreditCard, color: "#6b12d6" },
-    { label: "Retrait\nautomatise", Icon: Package, color: "#6b12d6" },
-    { label: "Controle d'age souvent\nlimite a une simple declaration", Icon: XCircle, color: "#df174f" },
+    { label: "Commande\ndigitalis\u00e9e", Icon: Package, color: "#6b12d6" },
+    { label: "Paiement\ndigitalis\u00e9", Icon: CreditCard, color: "#6b12d6" },
+    { label: "Retrait\nautomatis\u00e9", Icon: Package, color: "#6b12d6" },
+    { label: "Contr\u00f4le d'\u00e2ge souvent\nlimit\u00e9 \u00e0 une simple d\u00e9claration", Icon: XCircle, color: "#df174f" },
   ];
 
   return (
@@ -406,7 +406,7 @@ export function HowItWorksSection() {
         <div className="mt-5 grid gap-x-3 gap-y-4 lg:grid-cols-[1.05fr_1.62fr_1.38fr]">
           <div className="hidden lg:block" />
           <SectionDivider label="Le retrait autonome explose" />
-          <SectionDivider label="Les enseignes accelerent" />
+          <SectionDivider label="Les enseignes acc\u00e9l\u00e8rent" />
 
           <div className="lg:row-span-2">
             <LockerSignalCard />
