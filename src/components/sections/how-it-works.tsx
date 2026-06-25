@@ -6,14 +6,15 @@ export function HowItWorksSection() {
     <section
       id="s2"
       aria-label="Pourquoi maintenant ?"
-      className="relative z-10 flex min-h-screen w-full scroll-mt-16 items-center justify-center bg-white px-4 py-10 sm:px-6 lg:px-10"
+      className="relative z-[var(--z-overlay)] min-h-screen w-screen scroll-mt-0 overflow-hidden bg-white"
     >
       <Image
         src={whyNowReference}
         alt="Pourquoi maintenant ? Le retrait autonome change d'échelle. La conformité doit suivre."
         priority
+        unoptimized
         sizes="(min-width: 1536px) 1536px, 100vw"
-        className="h-auto w-full max-w-[1536px]"
+        className="block h-auto w-screen max-w-none"
       />
     </section>
   );
