@@ -1,132 +1,221 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
+
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+const gradText: React.CSSProperties = {
+  background: "var(--gradient-brand)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  backgroundClip: "text",
+};
+
+function LockerSVG() {
+  return (
+    <div className="relative flex items-center justify-center">
+      <svg width="200" height="260" viewBox="0 0 200 260" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="pilotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1a47f5"/>
+            <stop offset="100%" stopColor="#7C3AED"/>
+          </linearGradient>
+        </defs>
+        {/* Cabinet body */}
+        <rect x="30" y="20" width="140" height="220" rx="10" fill="#F0F4FF" stroke="#C7D2FE" strokeWidth="2"/>
+        {/* Locker grid: 4 rows x 3 cols */}
+        {[0, 1, 2, 3].map((row) =>
+          [0, 1, 2].map((col) => (
+            <rect
+              key={`${row}-${col}`}
+              x={36 + col * 44}
+              y={26 + row * 52}
+              width={40}
+              height={48}
+              rx="4"
+              fill="white"
+              stroke="#C7D2FE"
+              strokeWidth="1.2"
+            />
+          ))
+        )}
+        {/* Screen panel */}
+        <rect x="50" y="230" width="100" height="6" rx="3" fill="#C7D2FE"/>
+        {/* Badge circle */}
+        <circle cx="155" cy="55" r="36" fill="url(#pilotGrad)" opacity="0.15"/>
+        <circle cx="155" cy="55" r="30" fill="url(#pilotGrad)"/>
+        <text x="155" y="50" textAnchor="middle" fill="white" fontSize="9" fontWeight="800">PILOTE</text>
+        <text x="155" y="62" textAnchor="middle" fill="white" fontSize="9" fontWeight="800">GRATUIT</text>
+        <text x="155" y="74" textAnchor="middle" fill="white/70" fontSize="7.5">2 MOIS</text>
+      </svg>
+    </div>
+  );
+}
+
+const BOTTOM_FEATURES = [
+  { icon: "🛡", title: "Conformité assurée", desc: "Respectez la réglementation et protégez les mineurs." },
+  { icon: "📊", title: "Résultats mesurables", desc: "On analyse l'impact réel sur vos retraits." },
+  { icon: "🚀", title: "Déploiement simple et rapide", desc: "Aucune refonte, aucun matériel." },
+  { icon: "👥", title: "Accompagnement dédié", desc: "Une équipe à vos côtés à chaque étape." },
+];
 
 export function ApPilot() {
-  return (
-    <section
-      id="pilote"
-      className="py-28 lg:py-36"
-      style={{ backgroundColor: "var(--bg-subtle)" }}
-    >
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+  const [role, setRole] = useState("");
 
-          {/* Left — editorial */}
+  return (
+    <section id="pilote" className="py-28 lg:py-36" style={{ background: "var(--bg-page)" }}>
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+
+        {/* 3-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-16">
+
+          {/* LEFT */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+            transition={{ duration: 0.7, ease }}
+            className="flex flex-col gap-7"
           >
-            <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--color-brand-600)] mb-5 block">
-              Programme pilote
-            </span>
-            <h2 className="text-[2.4rem] sm:text-[3rem] font-bold leading-[1.08] tracking-[-0.035em] text-[var(--text-primary)]">
-              Rejoignez les premières enseignes qui bâtissent{" "}
-              <span
-                style={{
-                  background: "linear-gradient(135deg, var(--color-brand-700) 0%, var(--color-brand-500) 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                la conformité de demain.
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-[0.12em] mb-3 block" style={{ color: "var(--color-brand-600)" }}>
+                PILOTE GRATUIT
               </span>
-            </h2>
-            <p className="mt-6 text-[var(--text-secondary)] leading-relaxed max-w-[400px]">
-              Nous sélectionnons un nombre limité de partenaires pilotes. Chaque pilote est accompagné directement par l&apos;équipe fondatrice d&apos;AgePass.
+              <h2 className="text-[2rem] sm:text-[2.4rem] font-bold leading-[1.1] tracking-[-0.035em] text-[var(--text-primary)]">
+                Testez AgePass{" "}
+                <span style={gradText} className="text-[3rem] sm:text-[3.5rem]">
+                  2 mois, sans engagement.
+                </span>
+              </h2>
+            </div>
+            <p className="text-[var(--text-secondary)] leading-relaxed">
+              On configure AgePass sur un point de retrait existant et on mesure les résultats ensemble.
             </p>
 
-            <div className="mt-10 flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               {[
-                "Accès complet à l'infrastructure pendant 2 mois",
-                "Accompagnement direct par l'équipe fondatrice",
-                "Aucun engagement, réponse sous 48 heures",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3">
-                  <div className="mt-0.5 w-4 h-4 rounded-full bg-[var(--color-brand-50)] border border-[var(--color-brand-200)] flex items-center justify-center shrink-0">
-                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
-                      <path d="M1.5 4l1.5 1.5L6.5 2" stroke="var(--color-brand-600)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                { icon: "🛡", title: "100% gratuit pendant 2 mois", desc: "Sans engagement, sans frais cachés." },
+                { icon: "🚀", title: "Déploiement rapide", desc: "On s'occupe de tout, vous gardez vos outils." },
+                { icon: "📊", title: "Résultats mesurables", desc: "Impact réel sur vos retraits et votre conformité." },
+              ].map((f) => (
+                <div key={f.title} className="flex items-start gap-3">
+                  <span className="text-xl shrink-0">{f.icon}</span>
+                  <div>
+                    <p className="font-bold text-sm text-[var(--text-primary)]">{f.title}</p>
+                    <p className="text-sm text-[var(--text-secondary)]">{f.desc}</p>
                   </div>
-                  <span className="text-sm text-[var(--text-secondary)] leading-relaxed">{item}</span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right — form */}
+          {/* CENTER */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease, delay: 0.1 }}
+            className="flex items-center justify-center"
+          >
+            <LockerSVG />
+          </motion.div>
+
+          {/* RIGHT — Form card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.1 }}
-            className="rounded-2xl bg-white border border-[var(--border-default)] p-8 lg:p-10"
-            style={{ boxShadow: "0 4px 24px -4px rgba(12,11,9,0.06)" }}
+            transition={{ duration: 0.7, ease, delay: 0.15 }}
+            className="rounded-2xl border p-7 bg-white"
+            style={{ borderColor: "var(--border-default)", boxShadow: "var(--shadow-xl)" }}
           >
-            <p className="text-base font-semibold text-[var(--text-primary)] mb-6">Demander mon accès pilote</p>
+            <h3 className="text-[1.2rem] font-bold text-[var(--text-primary)] mb-1">Rejoignez la liste d&apos;attente.</h3>
+            <p className="text-sm text-[var(--text-secondary)] mb-6">Soyez parmi les premiers à tester AgePass.</p>
 
-            <form
-              className="flex flex-col gap-4"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="pilot-name" className="text-xs font-medium text-[var(--text-secondary)]">
-                  Nom &amp; prénom
-                </label>
-                <input
-                  id="pilot-name"
-                  type="text"
-                  autoComplete="name"
-                  placeholder="Jean Dupont"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-subtle)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--color-brand-400)] focus:ring-2 focus:ring-[rgba(26,71,245,0.08)] transition"
-                />
+            <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+              {[
+                { type: "text", placeholder: "Votre prénom et nom", icon: "👤" },
+                { type: "text", placeholder: "Enseigne / Entreprise", icon: "🏢" },
+                { type: "email", placeholder: "Email professionnel", icon: "✉️" },
+              ].map((field) => (
+                <div key={field.placeholder} className="flex items-center gap-2.5 rounded-xl border px-4 py-3" style={{ borderColor: "var(--border-default)" }}>
+                  <span className="text-base shrink-0">{field.icon}</span>
+                  <input
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    className="flex-1 text-sm outline-none bg-transparent placeholder:text-[var(--text-tertiary)] text-[var(--text-primary)]"
+                  />
+                </div>
+              ))}
+
+              <div className="flex items-center gap-2.5 rounded-xl border px-4 py-3" style={{ borderColor: "var(--border-default)" }}>
+                <span className="text-base shrink-0">👁</span>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="flex-1 text-sm outline-none bg-transparent text-[var(--text-secondary)]"
+                >
+                  <option value="">Vous êtes...</option>
+                  <option value="enseigne">Enseigne / Retailer</option>
+                  <option value="operateur">Opérateur de casiers</option>
+                  <option value="editeur">Éditeur / Intégrateur</option>
+                  <option value="autre">Autre</option>
+                </select>
               </div>
 
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="pilot-email" className="text-xs font-medium text-[var(--text-secondary)]">
-                  E-mail professionnel
-                </label>
-                <input
-                  id="pilot-email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="jean@acme.fr"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-subtle)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--color-brand-400)] focus:ring-2 focus:ring-[rgba(26,71,245,0.08)] transition"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="pilot-message" className="text-xs font-medium text-[var(--text-secondary)]">
-                  Contexte
-                </label>
+              <div className="flex items-start gap-2.5 rounded-xl border px-4 py-3" style={{ borderColor: "var(--border-default)" }}>
+                <span className="text-base shrink-0 mt-0.5">💬</span>
                 <textarea
-                  id="pilot-message"
-                  rows={4}
-                  placeholder="Décrivez votre cas d'usage en quelques lignes…"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-subtle)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)] focus:outline-none focus:border-[var(--color-brand-400)] focus:ring-2 focus:ring-[rgba(26,71,245,0.08)] transition resize-none"
+                  placeholder="Un mot sur votre projet ou réseau (optionnel)"
+                  rows={3}
+                  className="flex-1 text-sm outline-none bg-transparent placeholder:text-[var(--text-tertiary)] text-[var(--text-primary)] resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-2 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[15px] font-semibold bg-[var(--color-brand-600)] text-white hover:bg-[var(--color-brand-700)] transition-colors duration-150 shadow-sm"
+                className="w-full py-3.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
+                style={{ background: "var(--gradient-brand)" }}
               >
-                Demander mon pilote
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                Demander mon pilote →
               </button>
-
-              <p className="text-center text-[11px] text-[var(--text-tertiary)]">
-                Réponse sous 48h · Aucun engagement
-              </p>
             </form>
-          </motion.div>
 
+            <p className="text-center text-[11px] text-[var(--text-tertiary)] mt-3">
+              ⏱ Réponse sous 48h • Aucun engagement
+            </p>
+          </motion.div>
         </div>
+
+        {/* Bottom 4 features */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          {BOTTOM_FEATURES.map((f) => (
+            <div key={f.title} className="rounded-xl border p-5 bg-white" style={{ borderColor: "var(--border-default)" }}>
+              <span className="text-2xl mb-3 block">{f.icon}</span>
+              <p className="text-[0.85rem] font-bold text-[var(--text-primary)] mb-1">{f.title}</p>
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer line */}
+        <div className="flex items-center justify-center gap-3 pt-6 border-t" style={{ borderColor: "var(--border-default)" }}>
+          <svg width="20" height="20" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="footerShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1a47f5"/>
+                <stop offset="100%" stopColor="#7C3AED"/>
+              </linearGradient>
+            </defs>
+            <path d="M14 2L4 6.5V13.5C4 19.2 8.4 24.5 14 26C19.6 24.5 24 19.2 24 13.5V6.5L14 2Z" fill="url(#footerShieldGrad)"/>
+            <path d="M10 13.5l2.5 2.5 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <p className="text-sm font-semibold text-[var(--text-secondary)]">
+            AgePass, la couche de conformité qui s&apos;intègre partout.
+          </p>
+        </div>
+
       </div>
     </section>
   );

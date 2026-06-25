@@ -1,57 +1,78 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AgePassPhone } from "@/components/ui/agepass-phone";
 
-function item(delay: number) {
-  return {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay } },
-  };
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+function ShieldIllustration() {
+  return (
+    <div className="relative flex items-center justify-center w-full h-full min-h-[400px]">
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: 340,
+          height: 340,
+          background: "radial-gradient(circle, rgba(26,71,245,0.08) 0%, rgba(124,58,237,0.04) 60%, transparent 100%)",
+        }}
+      />
+      <motion.div
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        style={{ filter: "drop-shadow(0 24px 40px rgba(26,71,245,0.18))" }}
+      >
+        <svg width="220" height="260" viewBox="0 0 220 260" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="heroShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#1a47f5" />
+              <stop offset="100%" stopColor="#7C3AED" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M110 10L20 46V120C20 175 62 222 110 238C158 222 200 175 200 120V46L110 10Z"
+            fill="url(#heroShieldGrad)"
+          />
+          <rect x="90" y="118" width="40" height="32" rx="5" fill="white" opacity="0.95"/>
+          <path d="M99 118V109C99 99 121 99 121 109V118" stroke="white" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.95"/>
+          <circle cx="110" cy="133" r="5" fill="url(#heroShieldGrad)"/>
+          <rect x="108" y="133" width="4" height="8" rx="2" fill="url(#heroShieldGrad)"/>
+        </svg>
+      </motion.div>
+    </div>
+  );
 }
+
+const PILLARS = [
+  { icon: "🛡", label: "Protection des mineurs" },
+  { icon: "📦", label: "Retrait autonome" },
+  { icon: "✓", label: "Conformité vérifiable" },
+  { icon: "⏱", label: "DSA 2027" },
+];
 
 export function ApHero() {
   return (
-    <section
-      className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden"
-      style={{ backgroundColor: "var(--bg-page)" }}
-      aria-label="AgePass — La couche de conformité du retrait autonome"
-    >
-      {/* Subtle radial glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: "radial-gradient(ellipse 70% 50% at 65% 50%, rgba(26,71,245,0.05) 0%, transparent 70%)",
-        }}
-      />
+    <section className="relative min-h-screen flex flex-col" style={{ background: "var(--bg-page)" }}>
+      <div className="flex-1 max-w-[1280px] mx-auto px-6 lg:px-12 w-full pt-28 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[70vh]">
 
-      <div className="relative z-10 max-w-[1280px] mx-auto w-full px-6 lg:px-12 py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
-
-          {/* Left — content */}
-          <div className="flex flex-col items-start">
-
-            {/* Label */}
-            <motion.div {...item(0.05)} className="mb-8">
-              <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--color-brand-600)]">
-                <span className="w-4 h-px bg-[var(--color-brand-400)]" />
+          {/* LEFT COLUMN */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease }}
+            className="flex flex-col gap-8"
+          >
+            <div className="flex items-center gap-3">
+              <div className="h-[2px] w-8 rounded-full" style={{ background: "var(--gradient-brand)" }} />
+              <span className="text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: "var(--color-brand-600)" }}>
                 Infrastructure de conformité
               </span>
-            </motion.div>
+            </div>
 
-            {/* Headline */}
-            <motion.h1
-              {...item(0.15)}
-              className="text-[3.2rem] sm:text-[4rem] lg:text-[4.5rem] xl:text-[5rem] font-bold leading-[1.02] tracking-[-0.045em] text-[var(--text-primary)]"
-            >
-              La couche de{" "}
-              <br className="hidden sm:block" />
-              conformité du{" "}
-              <br className="hidden sm:block" />
+            <h1 className="text-[2.6rem] sm:text-[3.2rem] lg:text-[3.6rem] font-bold leading-[1.07] tracking-[-0.04em] text-[var(--text-primary)]">
+              La couche de conformité du{" "}
               <span
                 style={{
-                  background: "linear-gradient(135deg, var(--color-brand-700) 0%, var(--color-brand-500) 60%, #6366f1 100%)",
+                  background: "var(--gradient-brand)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -59,71 +80,68 @@ export function ApHero() {
               >
                 retrait autonome.
               </span>
-            </motion.h1>
+            </h1>
 
-            {/* Sub */}
-            <motion.p
-              {...item(0.3)}
-              className="mt-7 text-lg text-[var(--text-secondary)] leading-relaxed max-w-[440px]"
-            >
-              L&apos;infrastructure qui rend la conformité invisible — et la preuve, permanente.
-            </motion.p>
+            <ul className="flex flex-col gap-4 list-none p-0 m-0">
+              {([
+                { text: "Vérifier l'âge.", svg: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="white" strokeWidth="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg> },
+                { text: "Vérifier la personne.", svg: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L4 6v7c0 5 3.6 9.4 8 11 4.4-1.6 8-6 8-11V6L12 2Z" stroke="white" strokeWidth="2"/><path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+                { text: "Prouver la remise.", svg: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="white" strokeWidth="2"/><rect x="7" y="8" width="5" height="5" rx="0.5" stroke="white" strokeWidth="1.5"/><path d="M14 9h3M14 12h3M7 16h10" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg> },
+              ] as { text: string; svg: React.ReactNode }[]).map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "var(--gradient-brand)" }}>
+                    {item.svg}
+                  </div>
+                  <span className="text-[1.05rem] font-semibold text-[var(--text-primary)]">{item.text}</span>
+                </li>
+              ))}
+            </ul>
 
-            {/* CTAs */}
-            <motion.div {...item(0.45)} className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="h-[3px] w-20 rounded-full" style={{ background: "var(--gradient-brand)" }} />
+
+            <div className="flex flex-wrap gap-4">
               <a
                 href="#pilote"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-[15px] font-semibold bg-[var(--color-brand-600)] text-white hover:bg-[var(--color-brand-700)] transition-colors duration-150 shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[0.95rem] font-semibold text-white shadow-md transition-opacity hover:opacity-90"
+                style={{ background: "var(--gradient-brand)" }}
               >
-                Demander un pilote
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                Demander un pilote →
               </a>
               <a
                 href="#comment"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-[15px] font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-150"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[0.95rem] font-semibold border transition-colors hover:bg-[var(--bg-subtle)]"
+                style={{ borderColor: "var(--border-default)", color: "var(--text-secondary)" }}
               >
                 Comment ça marche
               </a>
-            </motion.div>
+            </div>
+          </motion.div>
 
-          </div>
-
-          {/* Right — phone mockup with glow */}
-          <div className="relative flex justify-center lg:justify-end">
-            <div
-              className="absolute pointer-events-none"
-              aria-hidden="true"
-              style={{
-                width: "120%", height: "120%",
-                top: "-10%", left: "-10%",
-                background: "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(26,71,245,0.10) 0%, transparent 70%)",
-                filter: "blur(40px)",
-              }}
-            />
-            <AgePassPhone size="lg" />
-          </div>
-
+          {/* RIGHT COLUMN */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease, delay: 0.15 }}
+            className="flex items-center justify-center"
+          >
+            <ShieldIllustration />
+          </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        aria-hidden="true"
-      >
-        <div className="w-5 h-8 rounded-full border border-[var(--border-strong)] flex items-start justify-center pt-1.5">
-          <motion.div
-            className="w-1 h-1.5 rounded-full bg-[var(--text-tertiary)]"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          />
+      {/* BOTTOM BAR */}
+      <div className="border-t w-full" style={{ borderColor: "var(--border-default)" }}>
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x" style={{ borderColor: "var(--border-default)" }}>
+            {PILLARS.map((p) => (
+              <div key={p.label} className="flex items-center gap-2.5 py-5 px-6">
+                <span className="text-lg">{p.icon}</span>
+                <span className="text-[0.8rem] font-semibold text-[var(--text-secondary)]">{p.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

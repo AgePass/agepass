@@ -38,7 +38,7 @@ export function Header() {
         "fixed top-0 inset-x-0 z-50",
         "transition-all duration-300",
         scrolled
-          ? "bg-[#F8F7F4]/90 backdrop-blur-md border-b border-[var(--border-default)]"
+          ? "bg-white/90 backdrop-blur-md border-b border-[var(--border-default)]"
           : "bg-transparent"
       )}
     >

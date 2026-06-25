@@ -1,18 +1,24 @@
 import { ApHero } from "@/components/sections/ap-hero";
-import { ApRupture } from "@/components/sections/ap-rupture";
+import { ApWhyNow } from "@/components/sections/ap-why-now";
+import { ApWhyAgepass } from "@/components/sections/ap-why-agepass";
 import { ApHowItWorks } from "@/components/sections/ap-how-it-works";
+import { ApContexts } from "@/components/sections/ap-contexts";
 import { ApAgeVerification } from "@/components/sections/ap-age-verification";
-import { ApInfrastructure } from "@/components/sections/ap-infrastructure";
+import { ApDeployment } from "@/components/sections/ap-deployment";
+import { ApPartners } from "@/components/sections/ap-partners";
 import { ApPilot } from "@/components/sections/ap-pilot";
 
 export default function HomePage() {
   return (
     <>
       <ApHero />
-      <ApRupture />
+      <ApWhyNow />
+      <ApWhyAgepass />
       <ApHowItWorks />
+      <ApContexts />
       <ApAgeVerification />
-      <ApInfrastructure />
+      <ApDeployment />
+      <ApPartners />
       <ApPilot />
     </>
   );

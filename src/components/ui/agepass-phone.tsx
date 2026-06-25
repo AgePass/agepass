@@ -80,7 +80,7 @@ export function AgePassPhone({ className, animate = true, size = "md" }: AgePass
         <div
           className="mx-3 rounded-xl px-4 py-3 flex items-center gap-2.5"
           style={{
-            background: "linear-gradient(135deg, var(--color-brand-700) 0%, var(--color-brand-500) 100%)",
+            background: "var(--gradient-brand)",
           }}
         >
           <svg width="16" height="16" viewBox="0 0 28 28" fill="none" aria-hidden="true">
