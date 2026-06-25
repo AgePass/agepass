@@ -77,7 +77,7 @@ const colorMap = {
 
 export function UseCasesSection() {
   return (
-    <Section background="page" className="overflow-hidden">
+    <Section background="page" size="md" className="overflow-hidden">
       <Container size="xl">
 
         {/* Header */}
@@ -87,7 +87,7 @@ export function UseCasesSection() {
             Votre secteur est concerné.<br />
             <span className="text-gradient-brand">Votre solution est là.</span>
           </Heading>
-          <p className="text-[var(--text-secondary)] text-lg max-w-lg text-pretty">
+          <p className="text-[var(--text-secondary)] text-lg max-w-lg text-balance">
             De l&apos;e-commerce au streaming, AgePass s&apos;adapte à chaque contexte
             métier avec ses propres exigences réglementaires.
           </p>

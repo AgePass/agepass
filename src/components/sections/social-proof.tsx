@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/text";
@@ -98,47 +98,59 @@ export function SocialProofSection() {
               style={{ background: "linear-gradient(to left, var(--bg-subtle), transparent)" }} />
 
             <motion.div
-              className="flex gap-8 items-center"
+              className="flex gap-6 items-center"
               animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 20, ease: "linear", repeat: Infinity }}
+              transition={{ duration: 24, ease: "linear", repeat: Infinity }}
               style={{ width: "max-content" }}
             >
               {[...LOGOS, ...LOGOS].map((logo, i) => (
                 <div
                   key={i}
                   className={cn(
-                    "flex items-center gap-2.5 px-5 py-3 rounded-xl",
-                    "bg-white border border-[var(--border-default)]",
+                    "flex items-center gap-3 px-5 py-3 rounded-2xl",
+                    "bg-white/80 border border-[var(--border-default)]",
+                    "shadow-[0_1px_4px_rgba(0,0,0,0.06)]",
                     "whitespace-nowrap shrink-0",
                   )}
                 >
-                  <div className="w-7 h-7 rounded-lg bg-[var(--color-neutral-100)] flex items-center justify-center text-[10px] font-bold text-[var(--text-secondary)]">
+                  <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[var(--color-neutral-200)] to-[var(--color-neutral-300)] flex items-center justify-center text-[9px] font-bold text-[var(--color-neutral-600)] tracking-tight">
                     {logo.abbr}
                   </div>
-                  <span className="text-sm font-medium text-[var(--text-secondary)]">{logo.name}</span>
+                  <span className="text-[13px] font-semibold text-[var(--color-neutral-500)]">{logo.name}</span>
                 </div>
               ))}
             </motion.div>
           </div>
         </Reveal>
 
-        {/* Stats row */}
-        <RevealGroup stagger={0.1} className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-          {STATS.map((stat) => (
-            <RevealItem key={stat.label}>
-              <div className="flex flex-col items-center gap-1 p-5 rounded-2xl bg-white border border-[var(--border-default)] text-center">
-                <span className="text-3xl font-bold tabular-nums text-[var(--color-brand-600)] tracking-tight">{stat.value}</span>
-                <span className="text-xs text-[var(--text-tertiary)]">{stat.label}</span>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+        {/* Stats — large editorial numbers */}
+        <Reveal className="mb-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-[var(--border-default)] border border-[var(--border-default)] rounded-2xl overflow-hidden bg-white shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
+            {STATS.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col items-center justify-center gap-1.5 py-8 px-4 text-center"
+              >
+                <span className="text-4xl lg:text-5xl font-black tabular-nums tracking-tight text-[var(--color-brand-600)]">{stat.value}</span>
+                <span className="text-xs text-[var(--text-tertiary)] uppercase tracking-wider font-medium">{stat.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </Reveal>
 
         {/* Testimonials */}
         <RevealGroup stagger={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
           {TESTIMONIALS.map((t) => (
             <RevealItem key={t.author}>
-              <div className="flex flex-col gap-5 p-6 rounded-2xl bg-white border border-[var(--border-default)] h-full">
+              <motion.div
+                whileHover={{ y: -3 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col gap-5 p-6 rounded-2xl bg-white border border-[var(--border-default)] h-full shadow-[0_1px_6px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-shadow duration-300"
+              >
                 {/* Stars */}
                 <div className="flex gap-0.5">
                   {Array.from({ length: t.stars }).map((_, i) => (
@@ -146,11 +158,10 @@ export function SocialProofSection() {
                   ))}
                 </div>
 
-                {/* Quote */}
-                <div className="relative flex-1">
-                  <Quote className="absolute -top-1 -left-1 w-5 h-5 text-[var(--border-strong)] opacity-50" />
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed pl-3 italic">{t.quote}</p>
-                </div>
+                {/* Quote — no icon, editorial style */}
+                <p className="text-[15px] text-[var(--text-primary)] leading-relaxed flex-1 font-medium">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
 
                 {/* Author */}
                 <div className="flex items-center gap-3 pt-4 border-t border-[var(--border-default)]">
@@ -165,7 +176,7 @@ export function SocialProofSection() {
                     {t.sector}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             </RevealItem>
           ))}
         </RevealGroup>

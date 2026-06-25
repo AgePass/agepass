@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { motion } from "framer-motion";
 import { Terminal, Webhook, Key, BookOpen, ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/section";
@@ -74,8 +75,6 @@ const FEATURES = [
 ];
 
 /* ─── DeveloperIntegrationSection ──────────────────────────────────────── */
-
-import * as React from "react";
 
 export function DeveloperIntegrationSection() {
   const [activeTab, setActiveTab] = React.useState<TabId>("install");

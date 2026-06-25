@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, FileCheck2, Globe, Lock, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, FileCheck2, Globe, Lock, AlertTriangle, CheckCircle2, X } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/text";
@@ -79,29 +79,34 @@ export function ComplianceSection() {
             La réglementation évolue.<br />
             <span className="text-gradient-brand">Nous nous en occupons.</span>
           </Heading>
-          <p className="text-[var(--text-secondary)] text-lg max-w-lg text-pretty">
-            Votre équipe juridique dort tranquille. Nos experts suivent chaque
-            évolution du cadre réglementaire européen pour vous.
+          <p className="text-[var(--text-secondary)] text-lg max-w-md text-balance mt-1">
+            Votre équipe juridique dort tranquille. Nos experts suivent chaque évolution du cadre réglementaire européen pour vous.
           </p>
         </Reveal>
 
-        {/* Certifications */}
-        <RevealGroup stagger={0.06} className="flex flex-wrap justify-center gap-3 mb-16">
-          {CERTS.map((cert) => (
-            <RevealItem key={cert.name}>
-              <div className={cn(
-                "flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-sm font-medium",
-                certColors[cert.color],
-              )}>
-                <CheckCircle2 className="w-4 h-4 shrink-0" strokeWidth={2} />
-                <div>
-                  <span className="font-semibold">{cert.name}</span>
-                  <span className="ml-1.5 text-xs opacity-70">{cert.desc}</span>
-                </div>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+        {/* Certifications — horizontal strip */}
+        <Reveal className="mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {CERTS.map((cert, i) => (
+              <motion.div
+                key={cert.name}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className={cn(
+                  "flex flex-col items-center gap-1.5 px-3 py-4 rounded-2xl border text-center",
+                  "shadow-[0_1px_4px_rgba(0,0,0,0.04)]",
+                  certColors[cert.color],
+                )}
+              >
+                <CheckCircle2 className="w-5 h-5 shrink-0" strokeWidth={2} />
+                <span className="text-sm font-bold leading-tight">{cert.name}</span>
+                <span className="text-[10px] opacity-65 leading-snug">{cert.desc}</span>
+              </motion.div>
+            ))}
+          </div>
+        </Reveal>
 
         {/* Two columns: security features + comparison */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
@@ -115,9 +120,9 @@ export function ComplianceSection() {
               const Icon = item.icon;
               return (
                 <RevealItem key={item.title}>
-                  <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-[var(--border-default)]">
-                    <div className="w-9 h-9 rounded-xl bg-[var(--color-brand-50)] text-[var(--color-brand-600)] flex items-center justify-center shrink-0">
-                      <Icon className="w-4.5 h-4.5" strokeWidth={1.75} />
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-[var(--border-default)] shadow-sm">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--color-brand-50)] text-[var(--color-brand-600)] flex items-center justify-center shrink-0">
+                      <Icon className="w-[18px] h-[18px]" strokeWidth={1.75} />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-[var(--text-primary)] mb-1">{item.title}</p>
@@ -190,7 +195,7 @@ function Cell({ value, highlight }: { value: boolean | string; highlight?: boole
     <div className="flex justify-center">
       {value
         ? <CheckCircle2 className={cn("w-4 h-4", highlight ? "text-[var(--color-success-500)]" : "text-[var(--color-neutral-400)]")} strokeWidth={2.5} />
-        : <span className="w-4 h-4 flex items-center justify-center text-[var(--color-neutral-300)] text-lg leading-none">×</span>
+        : <X className="w-4 h-4 text-[var(--color-neutral-300)]" strokeWidth={2} />
       }
     </div>
   );

@@ -48,47 +48,52 @@ export function CtaBannerSection() {
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-[var(--color-neutral-300)]"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success-400)] animate-pulse" />
-                Conformité DSA obligatoire au 17 février 2024
+                DSA Article 28 · En vigueur
               </motion.div>
 
               {/* Headline */}
               <Heading size="4xl" balance className="text-white leading-tight">
-                Votre mise en conformité<br />
-                commence{" "}
+                Soyez conforme.{" "}
+                <br className="hidden sm:block" />
                 <span style={{
                   background: "linear-gradient(135deg, #82aaff 0%, #c792ea 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                 }}>
-                  aujourd&apos;hui.
+                  En 30 minutes.
                 </span>
               </Heading>
 
-              <p className="text-[var(--color-neutral-400)] text-lg leading-relaxed max-w-xl">
-                Rejoignez plus de 40 plateformes qui ont choisi AgePass pour sécuriser
-                leur accès aux contenus sensibles. Premier mois inclus.
+              <p className="text-[var(--color-neutral-400)] text-lg leading-relaxed max-w-lg">
+                Rejoignez 40+ plateformes qui font confiance à AgePass pour leur conformité réglementaire.
+                Premier mois gratuit, sans carte bancaire.
               </p>
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Button size="lg" variant="gradient" iconRight={<ArrowRight />}>
-                  Commencer gratuitement
+                  Démarrer gratuitement
                 </Button>
                 <Button
                   size="lg"
-                  variant="ghost"
+                  variant="outline"
                   iconLeft={<Calendar />}
-                  className="text-[var(--color-neutral-300)] hover:text-white hover:bg-white/[0.06]"
+                  className="border-white/20 text-[var(--color-neutral-300)] hover:border-white/40 hover:text-white bg-white/[0.04] hover:bg-white/[0.08]"
                 >
                   Planifier une démo
                 </Button>
               </div>
 
-              {/* Trust line */}
-              <p className="text-xs text-[var(--color-neutral-600)]">
-                Aucune carte bancaire · Sandbox immédiat · Support en 1h
-              </p>
+              {/* Trust signals */}
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                {["Sans carte bancaire", "Sandbox immédiat", "Support < 1h", "SLA 99,99%"].map((t) => (
+                  <span key={t} className="text-xs text-[var(--color-neutral-600)] flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-[var(--color-neutral-700)]" />
+                    {t}
+                  </span>
+                ))}
+              </div>
 
             </div>
           </div>
