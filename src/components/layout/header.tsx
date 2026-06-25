@@ -3,23 +3,31 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/config/site";
 
-/**
- * Header — sticky, avec effet blur au scroll.
- *
- * Architecture: "transparent → frosted glass" au scroll.
- * Pas de `position: fixed` avec margin-top sur le body — on utilise
- * `position: sticky top-0` pour que le header pousse le contenu correctement.
- * Le z-index suit l'échelle de tokens.
- */
+function ShieldLogo() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <path
+        d="M14 2L4 6.5V13.5C4 19.2 8.4 24.5 14 26C19.6 24.5 24 19.2 24 13.5V6.5L14 2Z"
+        fill="var(--color-brand-600)"
+      />
+      <path
+        d="M10 13.5L12.5 16L18 11"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -27,59 +35,53 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-[var(--z-sticky)] w-full",
-        "transition-all duration-[250ms] ease-[var(--ease-out-quart)]",
+        "fixed top-0 inset-x-0 z-50",
+        "transition-all duration-300",
         scrolled
-          ? "bg-white/80 backdrop-blur-xl border-b border-[var(--border-default)] shadow-[var(--shadow-xs)]"
+          ? "bg-[#F8F7F4]/90 backdrop-blur-md border-b border-[var(--border-default)]"
           : "bg-transparent"
       )}
     >
-      <Container size="2xl">
-        <nav
-          className="flex h-16 items-center justify-between gap-8"
-          aria-label="Navigation principale"
-        >
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12">
+        <nav className="flex h-16 items-center justify-between" aria-label="Navigation principale">
+
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 font-semibold text-[var(--text-primary)] text-lg tracking-tight"
-          >
-            <span className="w-7 h-7 rounded-[var(--radius-md)] bg-[var(--color-brand-500)] flex items-center justify-center text-white text-sm font-bold">
-              A
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <ShieldLogo />
+            <span className="text-[15px] font-semibold tracking-tight text-[var(--text-primary)]">
+              AGEPASS
             </span>
-            {siteConfig.name}
           </Link>
 
-          {/* Nav links — masqués sur mobile */}
-          <ul className="hidden lg:flex items-center gap-1 list-none">
+          {/* Ancres centrales — desktop uniquement */}
+          <ul className="hidden md:flex items-center gap-1 list-none absolute left-1/2 -translate-x-1/2">
             {siteConfig.nav.links.map((link) => (
               <li key={link.href}>
-                <Link
+                <a
                   href={link.href}
-                  className={cn(
-                    "px-3 py-2 rounded-[var(--radius-md)] text-sm",
-                    "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
-                    "hover:bg-[var(--bg-muted)]",
-                    "transition-colors duration-[150ms]"
-                  )}
+                  className="px-3.5 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-150 rounded-lg hover:bg-black/[0.04]"
                 >
                   {link.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
 
-          {/* CTA */}
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/connexion">Se connecter</Link>
-            </Button>
-            <Button variant="brand" size="sm" asChild>
-              <Link href={siteConfig.nav.cta.href}>{siteConfig.nav.cta.label}</Link>
-            </Button>
-          </div>
+          {/* CTA unique */}
+          <a
+            href={siteConfig.nav.cta.href}
+            className={cn(
+              "hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium",
+              "bg-[var(--color-brand-600)] text-white",
+              "hover:bg-[var(--color-brand-700)] transition-colors duration-150",
+              "shadow-sm"
+            )}
+          >
+            {siteConfig.nav.cta.label}
+          </a>
+
         </nav>
-      </Container>
+      </div>
     </header>
   );
 }

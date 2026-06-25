@@ -1,23 +1,21 @@
 export const siteConfig = {
   name: "AgePass",
-  tagline: "La vérification d'âge souveraine",
+  tagline: "La couche de conformité qui s'intègre partout",
   description:
-    "AgePass est la solution de vérification d'âge conforme eIDAS 2.0 qui protège vos utilisateurs sans compromis sur la vie privée.",
+    "AgePass est une infrastructure de confiance permettant aux plateformes d'intégrer des mécanismes de preuve d'âge conformes, traçables et archivés.",
   url: "https://agepass.fr",
   ogImage: "https://agepass.fr/og.jpg",
 
   // Navigation
   nav: {
     links: [
-      { label: "Solution", href: "/solution" },
-      { label: "Technologie", href: "/technologie" },
-      { label: "Conformité", href: "/conformite" },
-      { label: "Partenaires", href: "/partenaires" },
-      { label: "Blog", href: "/blog" },
+      { label: "Pourquoi", href: "#pourquoi" },
+      { label: "Comment", href: "#comment" },
+      { label: "Cas d'usage", href: "#usage" },
     ],
     cta: {
-      label: "Demander une démo",
-      href: "/demo",
+      label: "Demander un pilote",
+      href: "#pilote",
     },
   },
 

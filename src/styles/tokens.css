@@ -58,24 +58,36 @@
    * sans chercher partout dans le code.
    * ──────────────────────────────────────────── */
 
+  /* ─── Warm cream palette ─────────────────────────────────────────────── */
+  --color-cream-50:  #FAFAF8;
+  --color-cream-100: #F8F7F4;
+  --color-cream-200: #F2F0EB;
+  --color-cream-300: #E8E5DE;
+  --color-cream-400: #D4D0C8;
+  --color-warm-500:  #A8A29E;
+  --color-warm-600:  #78716C;
+  --color-warm-700:  #4A4540;
+  --color-warm-800:  #292420;
+  --color-warm-900:  #0C0B09;
+
   /* Backgrounds */
-  --bg-page:        var(--color-neutral-0);
-  --bg-subtle:      var(--color-neutral-50);
-  --bg-muted:       var(--color-neutral-100);
-  --bg-emphasis:    var(--color-neutral-150);
-  --bg-inverse:     var(--color-neutral-900);
-  --bg-brand:       var(--color-brand-500);
+  --bg-page:         #F8F7F4;
+  --bg-subtle:       #F2F0EB;
+  --bg-muted:        #EAE7E0;
+  --bg-surface:      #FFFFFF;
+  --bg-inverse:      var(--color-neutral-900);
+  --bg-brand:        var(--color-brand-600);
   --bg-brand-subtle: var(--color-brand-50);
 
   /* Borders */
-  --border-default:  var(--color-neutral-200);
-  --border-strong:   var(--color-neutral-300);
+  --border-default:  #E5E2DC;
+  --border-strong:   #D4D0C8;
   --border-brand:    var(--color-brand-500);
 
   /* Text */
-  --text-primary:    var(--color-neutral-900);
-  --text-secondary:  var(--color-neutral-600);
-  --text-tertiary:   var(--color-neutral-400);
+  --text-primary:    #0C0B09;
+  --text-secondary:  #6B6460;
+  --text-tertiary:   #A8A29E;
   --text-inverse:    var(--color-neutral-0);
   --text-brand:      var(--color-brand-600);
   --text-on-brand:   var(--color-neutral-0);

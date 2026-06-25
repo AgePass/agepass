@@ -1,98 +1,71 @@
 import Link from "next/link";
-import { Container } from "@/components/ui/container";
-import { Divider } from "@/components/ui/divider";
-import { siteConfig } from "@/config/site";
 
-const footerLinks = {
-  Produit: [
-    { label: "Solution", href: "/solution" },
-    { label: "Technologie", href: "/technologie" },
-    { label: "Conformité", href: "/conformite" },
-    { label: "Tarifs", href: "/tarifs" },
-  ],
-  Entreprise: [
-    { label: "À propos", href: "/a-propos" },
-    { label: "Blog", href: "/blog" },
-    { label: "Presse", href: "/presse" },
-    { label: "Partenaires", href: "/partenaires" },
-  ],
-  Légal: [
-    { label: "Politique de confidentialité", href: "/confidentialite" },
-    { label: "Conditions générales", href: "/cgv" },
-    { label: "Mentions légales", href: "/mentions-legales" },
-    { label: "Cookies", href: "/cookies" },
-  ],
-};
+function ShieldLogo() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <path
+        d="M14 2L4 6.5V13.5C4 19.2 8.4 24.5 14 26C19.6 24.5 24 19.2 24 13.5V6.5L14 2Z"
+        fill="var(--color-brand-600)"
+      />
+      <path
+        d="M10 13.5L12.5 16L18 11"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export function Footer() {
   return (
-    <footer className="bg-[var(--bg-page)] border-t border-[var(--border-default)]">
-      <Container size="2xl" className="py-16">
-        {/* Top: Logo + Links */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Brand block */}
-          <div className="col-span-2 lg:col-span-2 flex flex-col gap-4">
-            <Link
-              href="/"
-              className="flex items-center gap-2 font-semibold text-[var(--text-primary)] text-lg tracking-tight w-fit"
-            >
-              <span className="w-7 h-7 rounded-[var(--radius-md)] bg-[var(--color-brand-500)] flex items-center justify-center text-white text-sm font-bold">
-                A
-              </span>
-              {siteConfig.name}
+    <footer className="border-t border-[var(--border-default)] bg-[var(--bg-page)]">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12 py-16">
+
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+
+          {/* Brand */}
+          <div className="flex flex-col gap-3">
+            <Link href="/" className="flex items-center gap-2">
+              <ShieldLogo />
+              <span className="text-[15px] font-semibold tracking-tight text-[var(--text-primary)]">AGEPASS</span>
             </Link>
-            <p className="text-sm text-[var(--text-secondary)] max-w-xs leading-relaxed">
-              {siteConfig.description}
+            <p className="text-sm text-[var(--text-tertiary)] max-w-[280px] leading-relaxed">
+              La couche de conformité qui s&apos;intègre partout.
             </p>
           </div>
 
-          {/* Link columns */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category} className="flex flex-col gap-4">
-              <h3 className="text-xs font-semibold text-[var(--text-primary)] tracking-widest uppercase">
-                {category}
-              </h3>
-              <ul className="flex flex-col gap-3 list-none">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-[150ms]"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          {/* Links */}
+          <div className="flex gap-12 text-sm">
+            <div className="flex flex-col gap-3">
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-tertiary)]">Produit</span>
+              <a href="#pourquoi" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Pourquoi AgePass</a>
+              <a href="#comment" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Comment ça marche</a>
+              <a href="#usage" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Cas d&apos;usage</a>
+              <a href="#pilote" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Pilote gratuit</a>
             </div>
-          ))}
+            <div className="flex flex-col gap-3">
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-tertiary)]">Légal</span>
+              <Link href="/confidentialite" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Confidentialité</Link>
+              <Link href="/mentions-legales" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Mentions légales</Link>
+              <Link href="/cgv" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">CGV</Link>
+            </div>
+          </div>
+
         </div>
 
-        <Divider className="my-10" />
-
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-[var(--border-default)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-xs text-[var(--text-tertiary)]">
-            © {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés.
+            © {new Date().getFullYear()} AgePass. Tous droits réservés.
           </p>
           <div className="flex items-center gap-4">
-            <Link
-              href={siteConfig.social.linkedin}
-              className="text-xs text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors"
-              aria-label="LinkedIn"
-            >
-              LinkedIn
-            </Link>
-            <Link
-              href={siteConfig.social.twitter}
-              className="text-xs text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors"
-              aria-label="Twitter / X"
-            >
-              Twitter
-            </Link>
+            <a href="https://linkedin.com/company/agepass" className="text-xs text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors">LinkedIn</a>
+            <a href="mailto:contact@agepass.fr" className="text-xs text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors">contact@agepass.fr</a>
           </div>
         </div>
-      </Container>
+
+      </div>
     </footer>
   );
 }
