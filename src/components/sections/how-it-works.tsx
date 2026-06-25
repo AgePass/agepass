@@ -116,6 +116,7 @@ function LockerSignalCard() {
           </p>
         </div>
         <Image
+          unoptimized
           src={`${assetPath}pickup-lockers.jpg`}
           alt="Consignes Pickup"
           width={190}
@@ -140,6 +141,7 @@ function LockerSignalCard() {
           </p>
         </div>
         <Image
+          unoptimized
           src={`${assetPath}ouidrop-lockers.jpg`}
           alt="Consignes Ouidrop"
           width={190}
@@ -164,6 +166,7 @@ function LockerSignalCard() {
           </p>
         </div>
         <Image
+          unoptimized
           src={`${assetPath}fresh-lockers.jpg`}
           alt="Consignes Pickup Fresh"
           width={190}
@@ -177,22 +180,29 @@ function LockerSignalCard() {
 
 function GrowthCard() {
   return (
-    <Card className="flex h-full flex-col px-6 py-6 text-center">
-      <p className="mx-auto max-w-[230px] text-[1.08rem] font-black uppercase leading-[1.45] text-[#090936]">
-        Le casier fran&ccedil;ais en forte croissance
+    <Card className="flex h-full min-h-[374px] flex-col px-7 pb-6 pt-7 text-left">
+      <p className="mx-auto max-w-[240px] text-center text-[1.1rem] font-black uppercase leading-[1.35] text-[#090936]">
+        Le casier fran&ccedil;ais
+        <br />
+        en forte croissance
       </p>
-      <p className="mt-5 text-[2.8rem] font-black leading-none tracking-normal text-[#0758e8]">
+      <p className="mt-7 text-[3rem] font-black leading-none tracking-normal text-[#0758e8]">
         +45%
       </p>
-      <p className="mx-auto mt-2 max-w-[245px] text-[0.93rem] font-semibold leading-[1.55] text-[#06062b]">
-        de croissance du nombre de casiers en France entre 2023 et 2024
+      <p className="mt-3 max-w-[250px] text-[0.96rem] font-semibold leading-[1.55] text-[#06062b]">
+        de croissance du nombre
+        <br />
+        de casiers en France entre
+        <br />
+        2023 et 2024<sup className="text-[0.58em]">(2)</sup>
       </p>
       <Image
+        unoptimized
         src={`${assetPath}growth-chart.jpg`}
         alt="Courbe de croissance"
         width={230}
         height={180}
-        className="mx-auto mt-auto h-auto w-[78%] max-w-[230px] pt-4"
+        className="mx-auto mt-auto h-auto w-[86%] max-w-[230px] pt-4"
       />
     </Card>
   );
@@ -200,22 +210,27 @@ function GrowthCard() {
 
 function EuropeCard() {
   return (
-    <Card className="flex h-full flex-col px-6 py-6 text-center">
-      <p className="mx-auto max-w-[230px] text-[1.08rem] font-black uppercase leading-[1.45] text-[#090936]">
-        Le march&eacute; europ&eacute;en acc&eacute;l&egrave;re
+    <Card className="flex h-full min-h-[374px] flex-col px-7 pb-6 pt-7 text-left">
+      <p className="mx-auto max-w-[230px] text-center text-[1.1rem] font-black uppercase leading-[1.35] text-[#090936]">
+        Le march&eacute; europ&eacute;en
+        <br />
+        acc&eacute;l&egrave;re
       </p>
-      <p className="mt-5 text-[2.75rem] font-black leading-none tracking-normal text-[#6413d4]">
+      <p className="mt-7 text-[2.95rem] font-black leading-none tracking-normal text-[#6413d4]">
         155 000+
       </p>
-      <p className="mx-auto mt-2 max-w-[250px] text-[0.93rem] font-semibold leading-[1.55] text-[#06062b]">
-        consignes automatiques en Europe fin 2024, soit +29% sur un an
+      <p className="mt-3 max-w-[250px] text-[0.96rem] font-semibold leading-[1.55] text-[#06062b]">
+        consignes automatiques en Europe
+        <br />
+        fin 2024, soit +29% sur un an<sup className="text-[0.58em]">(3)</sup>
       </p>
       <Image
+        unoptimized
         src={`${assetPath}europe-map.jpg`}
         alt="Carte Europe"
         width={230}
         height={190}
-        className="mx-auto mt-auto h-auto w-[76%] max-w-[230px] pt-4"
+        className="mx-auto mt-auto h-auto w-[82%] max-w-[230px] pt-4"
       />
     </Card>
   );
@@ -240,6 +255,7 @@ function LeclercCard() {
         d&apos;augmentation du nombre de magasins automatiques en centre-ville entre 2023 et 2024
       </p>
       <Image
+          unoptimized
         src={`${assetPath}leclerc-store.jpg`}
         alt="Magasin automatique E.Leclerc"
         width={235}
@@ -261,6 +277,7 @@ function ShopicCard() {
         Des caddies autonomes pour des courses sans caisse ni personnel.
       </p>
       <Image
+          unoptimized
         src={`${assetPath}shopic-cart.jpg`}
         alt="Caddie autonome Shopic"
         width={220}
@@ -370,6 +387,7 @@ function AgePassGapCard() {
         La conformit&eacute; devient aussi automatisable que la commande ou le paiement.
       </p>
       <Image
+          unoptimized
         src={`${assetPath}agepass-lock.jpg`}
         alt="Cadenas AgePass"
         width={230}
@@ -406,7 +424,7 @@ export function HowItWorksSection() {
         <div className="mt-5 grid gap-x-3 gap-y-4 lg:grid-cols-[1.05fr_1.62fr_1.38fr]">
           <div className="hidden lg:block" />
           <SectionDivider label="Le retrait autonome explose" />
-          <SectionDivider label="Les enseignes acc\u00e9l\u00e8rent" />
+          <SectionDivider label={"Les enseignes acc\u00e9l\u00e8rent"} />
 
           <div className="lg:row-span-2">
             <LockerSignalCard />
