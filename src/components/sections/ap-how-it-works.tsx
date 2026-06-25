@@ -7,38 +7,38 @@ const STEPS = [
   {
     n: 1,
     title: "Commande passée",
-    desc: "Le client finalise sa commande en ligne, incluant un produit soumis à restriction d'âge.",
+    desc: "La commande est passée. Parmi les articles : un produit soumis à restriction d'âge.",
   },
   {
     n: 2,
-    title: "Produit +18 détecté",
-    desc: "La plateforme identifie automatiquement les références nécessitant une vérification d'âge.",
+    title: "Détection automatique",
+    desc: "AgePass le détecte automatiquement. Le parcours de conformité s'enclenche.",
   },
   {
     n: 3,
     title: "Vérification du titulaire",
-    desc: "AgePass vérifie que la personne qui retire est bien le titulaire de la commande et majeure.",
+    desc: "L'identité du client est vérifiée. Majorité confirmée, titulaire authentifié.",
   },
   {
     n: 4,
-    title: "Validation",
-    desc: "L'autorisation de retrait est émise après confirmation de l'identité et de la majorité.",
+    title: "Autorisation émise",
+    desc: "L'autorisation est émise. La commande devient éligible au retrait.",
   },
   {
     n: 5,
     title: "QR Code sécurisé",
-    desc: "Un QR Code unique, horodaté et à durée de validité limitée est généré pour le retrait.",
+    desc: "Un QR Code sécurisé, horodaté, à usage unique est généré.",
     phone: true,
   },
   {
     n: 6,
     title: "Retrait autorisé",
-    desc: "Le client présente son QR Code au point de retrait. La borne ou le vendeur le scanne.",
+    desc: "Le client scanne son QR Code au point de retrait. Accès accordé.",
   },
   {
     n: 7,
     title: "Preuve archivée",
-    desc: "La preuve de conformité est archivée : identité vérifiée, heure, lieu, commande. Consultable à tout moment.",
+    desc: "La preuve est archivée : identité, heure, lieu, commande. Infalsifiable.",
   },
 ] satisfies { n: number; title: string; desc: string; phone?: boolean }[];
 
@@ -56,7 +56,7 @@ export function ApHowItWorks() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="max-w-[560px] mb-20"
         >
           <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--color-brand-600)] mb-5 block">
@@ -87,20 +87,28 @@ export function ApHowItWorks() {
           <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-16 items-center">
 
             {/* Left steps 1–4 */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-10">
               {STEPS.slice(0, 4).map((step, i) => (
                 <motion.div
                   key={step.n}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
-                  className="flex gap-4 items-start"
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: i * 0.08 }}
+                  className="relative flex gap-4 items-start"
                 >
-                  <div className="shrink-0 w-8 h-8 rounded-full bg-[var(--color-brand-50)] border border-[var(--color-brand-200)] flex items-center justify-center">
+                  {/* Ghost step number */}
+                  <span
+                    className="absolute -left-2 -top-4 select-none pointer-events-none font-bold leading-none text-[var(--color-cream-300)]"
+                    style={{ fontSize: "7rem" }}
+                    aria-hidden="true"
+                  >
+                    {`0${step.n}`}
+                  </span>
+                  <div className="relative z-10 shrink-0 w-8 h-8 rounded-full bg-[var(--color-brand-50)] border border-[var(--color-brand-200)] flex items-center justify-center">
                     <span className="text-[11px] font-bold text-[var(--color-brand-600)]">{step.n}</span>
                   </div>
-                  <div>
+                  <div className="relative z-10 pt-0.5">
                     <p className="text-sm font-semibold text-[var(--text-primary)] mb-1">{step.title}</p>
                     <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
                   </div>
@@ -113,30 +121,50 @@ export function ApHowItWorks() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.2 }}
               className="flex flex-col items-center gap-4"
             >
-              <AgePassPhone size="md" />
+              <div className="relative flex justify-center">
+                <div
+                  className="absolute pointer-events-none"
+                  aria-hidden="true"
+                  style={{
+                    width: "120%", height: "120%",
+                    top: "-10%", left: "-10%",
+                    background: "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(26,71,245,0.10) 0%, transparent 70%)",
+                    filter: "blur(40px)",
+                  }}
+                />
+                <AgePassPhone size="md" />
+              </div>
               <div className="px-3 py-1.5 rounded-full bg-[var(--color-brand-50)] border border-[var(--color-brand-200)]">
                 <span className="text-[11px] font-semibold text-[var(--color-brand-700)]">Étape 5 — QR Code sécurisé</span>
               </div>
             </motion.div>
 
             {/* Right steps 5–7 */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-10">
               {STEPS.slice(4).map((step, i) => (
                 <motion.div
                   key={step.n}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.3 + i * 0.08 }}
-                  className="flex gap-4 items-start"
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.3 + i * 0.08 }}
+                  className="relative flex gap-4 items-start"
                 >
-                  <div className="shrink-0 w-8 h-8 rounded-full bg-[var(--color-brand-50)] border border-[var(--color-brand-200)] flex items-center justify-center">
+                  {/* Ghost step number */}
+                  <span
+                    className="absolute -left-2 -top-4 select-none pointer-events-none font-bold leading-none text-[var(--color-cream-300)]"
+                    style={{ fontSize: "7rem" }}
+                    aria-hidden="true"
+                  >
+                    {`0${step.n}`}
+                  </span>
+                  <div className="relative z-10 shrink-0 w-8 h-8 rounded-full bg-[var(--color-brand-50)] border border-[var(--color-brand-200)] flex items-center justify-center">
                     <span className="text-[11px] font-bold text-[var(--color-brand-600)]">{step.n}</span>
                   </div>
-                  <div>
+                  <div className="relative z-10 pt-0.5">
                     <p className="text-sm font-semibold text-[var(--text-primary)] mb-1">{step.title}</p>
                     <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
                   </div>
@@ -154,7 +182,7 @@ export function ApHowItWorks() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: i * 0.06 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: i * 0.06 }}
                 className="flex gap-4"
               >
                 {/* Line + number */}

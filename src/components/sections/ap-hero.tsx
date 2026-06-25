@@ -10,13 +10,6 @@ function item(delay: number) {
   };
 }
 
-const PILLARS = [
-  "Protection des mineurs",
-  "Retrait autonome",
-  "Conformité vérifiable",
-  "DSA 2027",
-] as const;
-
 export function ApHero() {
   return (
     <section
@@ -73,7 +66,7 @@ export function ApHero() {
               {...item(0.3)}
               className="mt-7 text-lg text-[var(--text-secondary)] leading-relaxed max-w-[440px]"
             >
-              Vérifier l&apos;âge. Vérifier la personne. Prouver la remise.
+              L&apos;infrastructure qui rend la conformité invisible — et la preuve, permanente.
             </motion.p>
 
             {/* CTAs */}
@@ -95,26 +88,20 @@ export function ApHero() {
               </a>
             </motion.div>
 
-            {/* Pillars */}
-            <motion.div
-              {...item(0.6)}
-              className="mt-12 flex flex-wrap gap-3"
-            >
-              {PILLARS.map((p) => (
-                <span
-                  key={p}
-                  className="inline-flex items-center gap-2 text-[12px] font-medium text-[var(--text-tertiary)] px-3 py-1.5 rounded-full border border-[var(--border-default)] bg-white/60"
-                >
-                  <span className="w-1 h-1 rounded-full bg-[var(--color-brand-400)]" />
-                  {p}
-                </span>
-              ))}
-            </motion.div>
-
           </div>
 
-          {/* Right — phone mockup */}
-          <div className="flex justify-center lg:justify-end">
+          {/* Right — phone mockup with glow */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div
+              className="absolute pointer-events-none"
+              aria-hidden="true"
+              style={{
+                width: "120%", height: "120%",
+                top: "-10%", left: "-10%",
+                background: "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(26,71,245,0.10) 0%, transparent 70%)",
+                filter: "blur(40px)",
+              }}
+            />
             <AgePassPhone size="lg" />
           </div>
 
